@@ -1,6 +1,8 @@
+import goto from './goto';
 import Screen from './Screen';
-import Button from './screen/Button';
 import Card from './screen/Card';
+import Button from './screen/Button';
+import Splash from './Splash';
 
 export default class CreateBoard extends Screen {
   render() {
@@ -10,6 +12,7 @@ export default class CreateBoard extends Screen {
         <Button>7 x 7</Button>
         <Button>11 x 11</Button>
         <Button>15 x 15</Button>
+        <Button action={() => goto(Splash)}>Home</Button>
       </Card>
     );
   }
