@@ -1,11 +1,11 @@
-import Screen from './Screen';
+import { Component, Fragment } from 'react';
 import Card from './screen/Card';
 import Button from './screen/Button';
 import Splash from './Splash';
-import AppContext from '../AppContext';
-import { Fragment } from 'react';
 
-export default class CreateBoard extends Screen {
+import AppContext from '../AppContext';
+
+export default class CreateBoard extends Component {
   render() {
     return (
       <AppContext.Consumer>

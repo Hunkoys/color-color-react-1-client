@@ -1,4 +1,4 @@
-import { Component, createContext } from 'react';
+import { Component } from 'react';
 import Splash from './app/Splash';
 import AppContext from './AppContext';
 

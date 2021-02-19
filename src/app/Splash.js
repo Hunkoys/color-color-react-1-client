@@ -1,11 +1,11 @@
+import { Component } from 'react';
 import Card from './screen/Card';
 import TextBox from './screen/TextBox';
 import Button from './screen/Button';
-import Screen from './Screen';
 import CreateBoard from './CreateBoard';
 
 import AppContext from '../AppContext';
-export default class Splash extends Screen {
+export default class Splash extends Component {
   constructor(props) {
     super(props);
   }
