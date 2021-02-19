@@ -1,6 +1,8 @@
-import { Component } from 'react';
+import { Component, createContext } from 'react';
 import { setGoto } from './app/goto';
 import Splash from './app/Splash';
+import AppContext from './AppContext';
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,11 @@ export default class App extends Component {
   };
 
   render() {
-    return <this.state.screen App={this.appInterface} />;
+    return (
+      <AppContext.Provider value={['Boy']}>
+        <this.state.screen App={this.appInterface} />
+        <Splash />
+      </AppContext.Provider>
+    );
   }
 }
