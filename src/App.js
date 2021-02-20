@@ -1,17 +1,7 @@
 import { Component } from 'react';
+import Accessor from './accessor/accessor';
 import Splash from './app/Splash';
 import AppContext from './AppContext';
-
-class Accessor {
-  constructor(reactComponent, property) {
-    this.get = () => reactComponent.state[property];
-    this.set = (value) => {
-      const state = {};
-      state[property] = value;
-      reactComponent.setState(state);
-    };
-  }
-}
 
 export default class App extends Component {
   constructor(props) {
