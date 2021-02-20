@@ -3,6 +3,7 @@ import Card from './screen/Card';
 import TextBox from './screen/TextBox';
 import Button from './screen/Button';
 import CreateBoard from './CreateBoard';
+import OpenGames from './OpenGames';
 
 import AppContext from '../AppContext';
 export default class Splash extends Component {
@@ -14,13 +15,12 @@ export default class Splash extends Component {
     return (
       <AppContext.Consumer>
         {(app) => {
-          console.log(app);
           return (
             <Card>
               <h1>Color Color</h1>
-              <TextBox store={app.state.username} placeholder="USERNAME" />
+              <TextBox store={app.username} placeholder="USERNAME" />
               <Button action={() => app.goto(CreateBoard)}>CREATE</Button>
-              <Button>JOIN</Button>
+              <Button action={() => app.goto(OpenGames)}>JOIN</Button>
             </Card>
           );
         }}

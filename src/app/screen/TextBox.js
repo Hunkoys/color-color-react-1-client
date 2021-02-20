@@ -13,8 +13,8 @@ export default class TextBox extends Component {
       <input
         type="text"
         placeholder={this.props.placeholder}
-        onChange={(e) => (this.props.store[0] = e.target.value)}
-        defaultValue={this.props.store[0]}
+        onChange={({ target }) => this.props.store.set(target.value)}
+        defaultValue={this.props.store.get()}
       />
     );
   }
