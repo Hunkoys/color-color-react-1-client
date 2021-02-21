@@ -1,0 +1,6 @@
+Components
+  Surface Level Abstraction should be declarative
+
+  We avoid inheritance for some reason
+  instead: we create Base Components and make them the first child of our instance Components
+  Base Components have attb:type for className and they append that type on the Base's className
