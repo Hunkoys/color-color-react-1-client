@@ -10,12 +10,15 @@ export default class TextBox extends Component {
 
   render() {
     return (
-      <input
-        type="text"
-        placeholder={this.props.placeholder}
-        onChange={({ target }) => this.props.store.set(target.value)}
-        defaultValue={this.props.store.get()}
-      />
+      <section className={`TextBox${this.props.type ? ` ${this.props.type}` : ''}`}>
+        <input
+          className="input"
+          type="text"
+          placeholder={this.props.placeholder}
+          onChange={({ target }) => this.props.store.set(target.value)}
+          defaultValue={this.props.store.get()}
+        />
+      </section>
     );
   }
 }

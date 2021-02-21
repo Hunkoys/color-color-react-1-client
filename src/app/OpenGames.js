@@ -1,16 +1,18 @@
 import { Component } from 'react';
-import AppContext from '../AppContext';
 import Screen from './Screen';
 import Button from './screen/Button';
+import Title from './screen/Title';
 import Splash from './Splash';
+
+import AppContext from '../AppContext';
 
 export default class OpenGames extends Component {
   render() {
     return (
       <AppContext.Consumer>
         {(app) => (
-          <Screen>
-            <h1>Online Players</h1>
+          <Screen type={'OpenGames'}>
+            <Title>Online Players</Title>
             <Button action={() => app.goto(Splash)}>Home</Button>
           </Screen>
         )}
