@@ -1,0 +1,31 @@
+@import 'theme';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+
+  background: $base-color;
+
+  font-family: $base-font-family;
+
+  user-select: none;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.Screen {
+  background: $substance-color;
+}
+
+.Title {
+  font-size: 2rem;
+}
+
+@import './app/Screen';
