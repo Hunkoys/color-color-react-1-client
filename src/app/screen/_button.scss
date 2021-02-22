@@ -1,0 +1,73 @@
+@import '../../theme';
+
+%Button {
+  position: relative;
+  display: inline-block;
+
+  .pill > button {
+    position: relative;
+    border: none;
+    outline: none;
+  }
+
+  &.hover,
+  & button {
+    cursor: pointer;
+  }
+
+  &.disabled {
+    .pill {
+      background-color: #555555;
+
+      button {
+        background: gray;
+      }
+    }
+  }
+
+  & .pill > button {
+    transition: top 10ms;
+  }
+}
+
+@mixin Button-size($button-size) {
+  @extend %Button;
+  // border: 1px solid #333; // Debug
+
+  $taper: $button-size/6;
+
+  margin: $button-size/12;
+  padding: $button-size/6 $button-size/30 $button-size/30;
+
+  .pill {
+    height: $button-size;
+    border-radius: $taper;
+    background: $accent-color-shade;
+
+    button {
+      top: -$button-size/6;
+
+      height: $button-size;
+      padding: 0 $button-size/3;
+      border-radius: $taper;
+
+      background: $accent-color;
+      color: $text-color-light;
+
+      font-size: $button-size / 2.4;
+    }
+  }
+
+  &.pressed > .pill > button {
+    top: -$button-size / 12;
+  }
+}
+
+.Button,
+.Button.lrg {
+  @include Button-size($button-lrg);
+}
+
+.Button.med {
+  @include Button-size($button-med);
+}
