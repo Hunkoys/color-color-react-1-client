@@ -58,38 +58,44 @@ body {
   }
 }
 
-// Button Sizes
-
-.Button {
-  // alias: Button.med
+@mixin Button-size($button-size) {
   @extend %Button;
-
   // border: 1px solid #333; // Debug
 
-  margin: 5px;
-  padding: 10px 2px 2px;
+  $taper: $button-size/6;
+
+  margin: $button-size/12;
+  padding: $button-size/6 $button-size/30 $button-size/30;
 
   .pill {
-    top: 8px;
-    height: $button-height-lrg;
-    border-radius: 10px;
-    background: #d15533;
+    height: $button-size;
+    border-radius: $taper;
+    background: $accent-color-shade;
 
     button {
-      top: -$button-travel-lrg;
+      top: -$button-size/6;
 
-      height: $button-height-lrg;
-      padding: 0 20px;
-      border-radius: $taper-lrg;
+      height: $button-size;
+      padding: 0 $button-size/3;
+      border-radius: $taper;
 
       background: $accent-color;
       color: $text-color-light;
 
-      font-size: 1.4rem;
+      font-size: $button-size / 2.4;
     }
   }
 
   &.pressed > .pill > button {
-    top: -$button-travel-lrg / 2;
+    top: -$button-size / 12;
   }
+}
+
+.Button,
+.Button.lrg {
+  @include Button-size($button-lrg);
+}
+
+.Button.med {
+  @include Button-size($button-med);
 }
