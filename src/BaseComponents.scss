@@ -1,0 +1,19 @@
+@import './Theme.scss';
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: $base-color;
+}
+
+.Screen {
+  background: $substance-color;
+}
+
+.Button {
+  background: $accent-color;
+}
