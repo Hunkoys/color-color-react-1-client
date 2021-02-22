@@ -1,4 +1,4 @@
-export default class Accessor {
+export class Accessor {
   constructor(reactComponent, property) {
     this.get = () => reactComponent.state[property];
     this.set = (value) => {
@@ -7,4 +7,8 @@ export default class Accessor {
       reactComponent.setState(state);
     };
   }
+}
+
+export function appendClassName(className) {
+  return className ? ` ${className}` : '';
 }

@@ -1,0 +1,32 @@
+// Naming Convention
+//   subject-property-variant - default naming
+//   Sizes: xxs xs sml med lrg xl xxl
+
+$base-color: #f4f2e7;
+
+$primary-color: white;
+
+$substance-color: white;
+
+$accent-color: #ed6d4b;
+$accent-color-shade: #d15533;
+
+$text-color-light: #fbede8;
+$text-color-dark: #111111;
+
+$base-font-size: 1rem;
+$base-font-family: Arial, Helvetica, sans-serif;
+
+$max-width-mobile: 300px; // Temporary
+
+$taper-sml: 8px;
+$taper-med: 10px;
+$taper-lrg: 14px;
+
+$button-travel: 8px;
+
+$button-height-med: 40px;
+$button-travel-lrg: $button-travel;
+
+$button-height-lrg: 60px;
+$button-travel-lrg: $button-travel;

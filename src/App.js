@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Accessor from './accessor/accessor';
+import { Accessor } from './standard/standard';
 import Splash from './app/Splash';
 import AppContext from './AppContext';
 

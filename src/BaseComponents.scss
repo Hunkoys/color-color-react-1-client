@@ -1,4 +1,4 @@
-@import './Theme.scss';
+@import 'theme';
 
 * {
   box-sizing: border-box;
@@ -7,13 +7,89 @@
 }
 
 body {
+  height: 100vh;
+
   background: $base-color;
+
+  font-family: $base-font-family;
+
+  user-select: none;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .Screen {
   background: $substance-color;
 }
 
+.Title {
+  font-size: 2rem;
+}
+
+%Button {
+  position: relative;
+  display: inline-block;
+
+  .pill > button {
+    position: relative;
+    border: none;
+    outline: none;
+  }
+
+  &.hover,
+  & button {
+    cursor: pointer;
+  }
+
+  &.disabled {
+    .pill {
+      background-color: #555555;
+
+      button {
+        background: gray;
+      }
+    }
+  }
+
+  & .pill > button {
+    transition: top 10ms;
+  }
+}
+
+// Button Sizes
+
 .Button {
-  background: $accent-color;
+  // alias: Button.med
+  @extend %Button;
+
+  // border: 1px solid #333; // Debug
+
+  margin: 5px;
+  padding: 10px 2px 2px;
+
+  .pill {
+    top: 8px;
+    height: $button-height-lrg;
+    border-radius: 10px;
+    background: #d15533;
+
+    button {
+      top: -$button-travel-lrg;
+
+      height: $button-height-lrg;
+      padding: 0 20px;
+      border-radius: $taper-lrg;
+
+      background: $accent-color;
+      color: $text-color-light;
+
+      font-size: 1.4rem;
+    }
+  }
+
+  &.pressed > .pill > button {
+    top: -$button-travel-lrg / 2;
+  }
 }
