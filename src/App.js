@@ -5,13 +5,18 @@ import AppContext from './AppContext';
 
 import './app.scss';
 
+import CreateBoard from './app/CreateBoard';
+import OpenGames from './app/OpenGames';
+
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      screen: Splash,
-      username: 'Dominic Victoria',
+      screen: OpenGames,
+      username: '',
     };
+
+    const elementSpace = '12px';
 
     this.appInterface = {
       state: this.state,
@@ -19,11 +24,15 @@ export default class App extends Component {
         this.setState({ screen });
       },
       username: new Accessor(this, 'username'),
+      ui: {
+        elementSpace: elementSpace,
+        buttonSpace: elementSpace,
+        backButtonSpace: '36px',
+      },
     };
   }
 
   render() {
-    console.log(this.state.username);
     return (
       <AppContext.Provider value={this.appInterface}>
         <this.state.screen />

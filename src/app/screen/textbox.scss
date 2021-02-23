@@ -1,14 +1,21 @@
 @import '../../theme';
 
 .TextBox {
+  $border-width: 4px;
+
   input {
     width: 100%;
-    height: 60px;
-    padding: 10px;
-    border: 4px solid $text-color-dark;
+    height: 70px;
+    padding: 15px;
+    border: $border-width solid $text-color-dark;
     border-radius: $taper-med;
-    font-size: 1.7rem;
+    outline: none;
+    font-size: 2rem;
   }
 
   // active {
+  > input:focus {
+    border: 4px solid $focus-color;
+    box-shadow: 0 0 2px 1px $focus-color;
+  }
 }

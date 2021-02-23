@@ -43,8 +43,7 @@
   $taper: $button-size/6;
   $travel: $button-size/12;
 
-  margin: $button-size/12;
-  padding: $travel * 1.6 $button-size/30 $button-size/30;
+  padding-top: $travel * 1.5;
 
   .pill {
     height: $button-size;

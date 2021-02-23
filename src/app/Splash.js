@@ -8,6 +8,7 @@ import CreateBoard from './CreateBoard';
 import OpenGames from './OpenGames';
 
 import AppContext from '../AppContext';
+import Spacer from './screen/Spacer';
 export default class Splash extends Component {
   constructor(props) {
     super(props);
@@ -20,13 +21,16 @@ export default class Splash extends Component {
           return (
             <Screen type="Splash">
               <Card>
-                <Title>Color Color</Title>
-                <TextBox store={app.username} placeholder="USERNAME" />
+                <Title type="game-title">Color Color</Title>
+                <Spacer height="16px" />
+                <TextBox store={app.username} placeholder="Your Name" />
+                <Spacer height="16px" />
                 <Button type="block" action={() => app.goto(CreateBoard)}>
-                  CREATE
+                  NEW GAME
                 </Button>
+                <Spacer height={app.ui.buttonSpace} />
                 <Button type="block" action={() => app.goto(OpenGames)}>
-                  JOIN
+                  JOIN GAME
                 </Button>
               </Card>
             </Screen>
