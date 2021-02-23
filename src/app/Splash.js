@@ -22,8 +22,12 @@ export default class Splash extends Component {
               <Card>
                 <Title>Color Color</Title>
                 <TextBox store={app.username} placeholder="USERNAME" />
-                <Button action={() => app.goto(CreateBoard)}>CREATE</Button>
-                <Button action={() => app.goto(OpenGames)}>JOIN</Button>
+                <Button type="block" action={() => app.goto(CreateBoard)}>
+                  CREATE
+                </Button>
+                <Button type="block" action={() => app.goto(OpenGames)}>
+                  JOIN
+                </Button>
               </Card>
             </Screen>
           );

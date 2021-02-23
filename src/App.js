@@ -3,7 +3,7 @@ import { Accessor } from './standard/standard';
 import Splash from './app/Splash';
 import AppContext from './AppContext';
 
-import './App.scss';
+import './app.scss';
 
 export default class App extends Component {
   constructor(props) {

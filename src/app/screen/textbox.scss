@@ -1,0 +1,14 @@
+@import '../../theme';
+
+.TextBox {
+  input {
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    border: 4px solid $text-color-dark;
+    border-radius: $taper-med;
+    font-size: 1.7rem;
+  }
+
+  // active {
+}

@@ -11,6 +11,8 @@ $substance-color: white;
 $accent-color: #ed6d4b;
 $accent-color-shade: #d15533;
 
+$shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
 $text-color-light: #fbede8;
 $text-color-dark: #111111;
 
@@ -19,9 +21,11 @@ $base-font-family: Arial, Helvetica, sans-serif;
 
 $max-width-mobile: 300px; // Temporary
 
-$taper-sml: 8px;
+$card-width: 340px;
+
+$taper-sml: 5px;
 $taper-med: 10px;
-$taper-lrg: 14px;
+$taper-lrg: 20px;
 
 $button-med: 40px;
 

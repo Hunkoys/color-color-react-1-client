@@ -1,6 +1,9 @@
 @import '../../theme';
 
 .Card {
-  display: flex;
-  flex-direction: column;
+  margin: auto;
+  padding: 20px;
+  border-radius: $taper-lrg;
+  box-shadow: $shadow;
+  background: $substance-color;
 }

@@ -4,14 +4,20 @@
   position: relative;
   display: inline-block;
 
-  .pill > button {
-    position: relative;
-    border: none;
-    outline: none;
+  .pill {
+    display: inline-block;
+
+    > button {
+      position: relative;
+      border: none;
+      outline: none;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
   }
 
   &.hover,
-  & button {
+  button {
     cursor: pointer;
   }
 
@@ -25,7 +31,7 @@
     }
   }
 
-  & .pill > button {
+  .pill > button {
     transition: top 10ms;
   }
 }
@@ -35,21 +41,20 @@
   // border: 1px solid #333; // Debug
 
   $taper: $button-size/6;
+  $travel: $button-size/12;
 
   margin: $button-size/12;
-  padding: $button-size/6 $button-size/30 $button-size/30;
+  padding: $travel * 1.6 $button-size/30 $button-size/30;
 
   .pill {
     height: $button-size;
-    border-radius: $taper;
     background: $accent-color-shade;
 
     button {
-      top: -$button-size/6;
+      top: -$travel * 1.5;
 
       height: $button-size;
       padding: 0 $button-size/3;
-      border-radius: $taper;
 
       background: $accent-color;
       color: $text-color-light;
@@ -59,13 +64,28 @@
   }
 
   &.pressed > .pill > button {
-    top: -$button-size / 12;
+    top: -$travel;
+  }
+
+  &.block {
+    &,
+    > .pill,
+    > .pill > button {
+      width: 100%;
+    }
   }
 }
 
 .Button,
 .Button.lrg {
   @include Button-size($button-lrg);
+  .pill {
+    border-radius: $taper-med;
+
+    button {
+      border-radius: $taper-med;
+    }
+  }
 }
 
 .Button.med {

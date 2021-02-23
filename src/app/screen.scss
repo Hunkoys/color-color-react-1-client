@@ -1,8 +1,18 @@
-@import './screen/Button';
-@import './screen/Card';
+@import './screen/button';
+@import './screen/card';
+@import './screen/title';
+@import './screen/textbox';
 
 // .Button {
 //   > .pill {
 //     background: green;
 //   }
 // }
+
+.Screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
