@@ -1,0 +1,15 @@
+@import '../../theme';
+
+// set min height so it doesn't look like a strip
+
+.Pit {
+  overflow: scroll;
+  padding: $taper-med;
+  border: 0px solid #d9d8d0;
+  border-radius: $taper-med;
+  box-shadow: rgb(217, 218, 222) 9.91px 9.91px 15px inset, rgb(255, 255, 255) -9.91px -9.91px 15px inset;
+
+  &.block {
+    width: 100%;
+  }
+}

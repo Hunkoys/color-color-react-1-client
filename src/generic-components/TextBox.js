@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { appendClassName } from '../common/functions';
 
 export default class TextBox extends Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class TextBox extends Component {
 
   render() {
     return (
-      <section className={`TextBox${this.props.type ? ` ${this.props.type}` : ''}`}>
+      <section className={'TextBox' + appendClassName(this.props.type)}>
         <input
           className="input"
           type="text"

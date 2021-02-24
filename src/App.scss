@@ -24,7 +24,8 @@ body {
   height: 100%;
 }
 
-@import './app/Screen';
+@import './app/components/screen/screen.scss';
+@import './generic-components/generic-components';
 
 .Card {
   display: flex;

@@ -1,12 +1,12 @@
 import { Component } from 'react';
-import { Accessor } from './standard/standard';
-import Splash from './app/Splash';
+import { Accessor } from './common/classes';
+import Splash from './app/screens/Splash';
 import AppContext from './AppContext';
 
 import './app.scss';
 
-import CreateBoard from './app/CreateBoard';
-import OpenGames from './app/OpenGames';
+import CreateBoard from './app/screens/CreateBoard';
+import OpenGames from './app/screens/OpenGames';
 
 export default class App extends Component {
   constructor(props) {

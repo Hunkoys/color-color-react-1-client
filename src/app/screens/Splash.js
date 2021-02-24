@@ -1,14 +1,14 @@
 import { Component } from 'react';
-import Screen from './Screen';
-import Card from './screen/Card';
-import Title from './screen/Title';
-import TextBox from './screen/TextBox';
-import Button from './screen/Button';
+import Screen from '../components/Screen';
+import Card from '../../generic-components/Card';
+import Title from '../../generic-components/Title';
+import TextBox from '../../generic-components/TextBox';
+import Button from '../../generic-components/Button';
 import CreateBoard from './CreateBoard';
 import OpenGames from './OpenGames';
 
-import AppContext from '../AppContext';
-import Spacer from './screen/Spacer';
+import AppContext from '../../AppContext';
+import Spacer from '../../generic-components/Spacer';
 export default class Splash extends Component {
   constructor(props) {
     super(props);

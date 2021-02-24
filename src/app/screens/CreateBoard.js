@@ -1,12 +1,12 @@
 import { Component } from 'react';
-import Screen from './Screen';
-import Card from './screen/Card';
-import Title from './screen/Title';
-import Button from './screen/Button';
+import Screen from '../components/Screen';
+import Title from '../../generic-components/Title';
+import Card from '../../generic-components/Card';
+import Button from '../../generic-components/Button';
 import Splash from './Splash';
 
-import AppContext from '../AppContext';
-import Spacer from './screen/Spacer';
+import AppContext from '../../AppContext';
+import Spacer from '../../generic-components/Spacer';
 
 export default class CreateBoard extends Component {
   render() {

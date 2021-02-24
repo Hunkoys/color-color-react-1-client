@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { appendClassName } from '../../standard/standard';
+import { appendClassName } from '../common/functions';
 
 export default class Title extends Component {
   render() {

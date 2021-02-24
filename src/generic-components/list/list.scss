@@ -1,0 +1,8 @@
+@import '../../theme';
+
+.List {
+  > ul,
+  > li {
+    list-style-type: none;
+  }
+}
