@@ -1,5 +1,8 @@
 @import 'theme';
 
+@import './app/components/app-components';
+@import './generic-components/generic-components';
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -23,9 +26,6 @@ body {
 #root {
   height: 100%;
 }
-
-@import './app/components/screen/screen.scss';
-@import './generic-components/generic-components';
 
 .Card {
   display: flex;

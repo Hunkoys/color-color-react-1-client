@@ -1,11 +1,11 @@
 import { Component } from 'react';
 import Screen from '../components/Screen';
 import Button from '../../generic-components/Button';
-import Title from '../../generic-components/Title';
+import Title from '../components/Title';
 import Splash from '../screens/Splash';
 
 import AppContext from '../../AppContext';
-import Card from '../../generic-components/Card';
+import Card from '../components/Card';
 
 export default class OpenGames extends Component {
   render() {

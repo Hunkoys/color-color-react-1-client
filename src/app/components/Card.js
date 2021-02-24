@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { appendClassName } from '../common/functions';
+import { appendClassName } from '../../common/functions';
 
 export default class Card extends Component {
   render() {

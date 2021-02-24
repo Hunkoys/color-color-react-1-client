@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import Screen from '../components/Screen';
-import Title from '../../generic-components/Title';
-import Card from '../../generic-components/Card';
+import Title from '../components/Title';
+import Card from '../components/Card';
 import Button from '../../generic-components/Button';
 import Splash from './Splash';
 
