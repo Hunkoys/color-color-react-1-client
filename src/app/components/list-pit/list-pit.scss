@@ -1,0 +1,48 @@
+@import '../../../theme';
+
+.ListPit {
+  // position: relative;
+
+  display: flex;
+  flex-direction: column;
+  max-height: 220px;
+  padding: 0;
+  border: 1px dotted #acacac;
+
+  background: $substance-color-shaded;
+
+  &.block {
+    width: 100%;
+  }
+
+  .List {
+    padding: 20px 10px;
+  }
+
+  .ListItem {
+    border-radius: $taper-med;
+    background: $substance-color;
+    box-shadow: $shadow;
+  }
+
+  .space-between-items {
+    height: 15px;
+  }
+
+  // .scroll-blur {
+  //   // background: red;
+
+  //   position: absolute;
+  //   left: 0;
+  //   width: 100%;
+  //   height: 2px;
+  //   backdrop-filter: blur(1px);
+
+  //   &.top {
+  //     top: 0;
+  //   }
+  //   &.bottom {
+  //     bottom: 0;
+  //   }
+  // }
+}

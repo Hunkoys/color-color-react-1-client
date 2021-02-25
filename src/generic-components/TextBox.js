@@ -18,6 +18,7 @@ export default class TextBox extends Component {
           placeholder={this.props.placeholder}
           onChange={({ target }) => this.props.store.set(target.value)}
           defaultValue={this.props.store.get()}
+          spellCheck={this.props.spellCheck}
         />
       </section>
     );

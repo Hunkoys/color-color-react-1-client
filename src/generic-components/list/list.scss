@@ -1,6 +1,8 @@
 @import '../../theme';
 
 .List {
+  overflow: scroll;
+
   > ul,
   > li {
     list-style-type: none;

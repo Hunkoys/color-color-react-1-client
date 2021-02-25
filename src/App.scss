@@ -1,7 +1,7 @@
 @import 'theme';
 
-@import './app/components/app-components';
 @import './generic-components/generic-components';
+@import './app/components/app-components';
 
 * {
   box-sizing: border-box;
@@ -10,14 +10,14 @@
 }
 
 body {
-  height: 100vh;
+  height: 90vh;
 
   background: $base-color;
 
   font-family: $base-font-family;
 
   user-select: none;
-  touch-action: none;
+  // touch-action: none;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -49,4 +49,21 @@ body {
 
 .game-title {
   font-size: 4.5rem;
+}
+
+.button-bar {
+  &.bb-horizontal {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .Button {
+    display: inline-block;
+    flex-shrink: 1;
+  }
+
+  .Spacer {
+    flex-shrink: 0;
+  }
 }

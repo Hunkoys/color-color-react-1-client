@@ -8,3 +8,9 @@ export default class List extends Component {
     return <ul className={'List' + appendClassName(this.props.type)}>{this.props.children}</ul>;
   }
 }
+
+export class ListItem extends Component {
+  render() {
+    return <li className={'ListItem' + appendClassName(this.props.type)}>{this.props.children}</li>;
+  }
+}
