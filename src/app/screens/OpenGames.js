@@ -6,6 +6,7 @@ import Title from '../components/Title';
 import Button from '../../generic-components/Button';
 import Spacer from '../../generic-components/Spacer';
 import Box from '../../generic-components/Box';
+import List from '../../generic-components/List';
 import ListPit from '../components/ListPit';
 import OpenGameItem from '../components/OpenGameItem';
 
@@ -129,6 +130,9 @@ export default class OpenGames extends Component {
               <Button type="block" action={() => app.goto(Splash)}>
                 HOME
               </Button>
+              <List select={(item) => console.log(item)}>
+                {[<div>yO</div>, <div>Bruh</div>, <div>Vrucs</div>, <div>Crud</div>]}
+              </List>
             </Card>
           </Screen>
         )}

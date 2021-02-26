@@ -23,7 +23,7 @@ export default class Splash extends Component {
               <Card>
                 <Title type="game-title">Color Color</Title>
                 <Spacer height="16px" />
-                <TextBox store={app.username} placeholder=" Your Name" spellCheck="false" />
+                <TextBox store={app.username} placeholder=" utYour Name" spellCheck="false" />
                 <Spacer height="16px" />
                 <Button type="block" action={() => app.goto(CreateBoard)}>
                   NEW GAME

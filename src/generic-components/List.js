@@ -11,13 +11,8 @@ export default class List extends Component {
     return (
       <ul className={'List' + appendClassName(this.props.type)}>
         {items.length
-          ? items.map((item, index) => {
-              return (
-                <Fragment key={`LisPitItem${index}`}>
-                  {index ? <Spacer type="space-between-items" /> : null}
-                  <ListItem>{item}</ListItem>
-                </Fragment>
-              );
+          ? items.map((item) => {
+              return <item.type {...item.props} {...{ onClick: () => this.props.select(item.props.children) }} />;
             })
           : this.props.placeholder}
       </ul>
