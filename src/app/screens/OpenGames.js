@@ -121,7 +121,9 @@ export default class OpenGames extends Component {
                   REFRESH
                 </Button>
                 <Spacer width={app.ui.buttonSpace} />
-                <Button type="block">JOIN</Button>
+                <Button type="block" disabled={this.state.selectedGame ? false : true}>
+                  JOIN
+                </Button>
               </Box>
               <Spacer height={app.ui.backButtonSpace} />
               <Button type="block" action={() => app.goto(Splash)}>
