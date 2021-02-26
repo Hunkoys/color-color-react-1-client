@@ -11,6 +11,7 @@ import ListPit from '../components/ListPit';
 import OpenGameItem from '../components/OpenGameItem';
 
 import AppContext from '../../AppContext';
+import ListItem from '../../generic-components/list/ListItem';
 
 // Server
 
@@ -130,8 +131,21 @@ export default class OpenGames extends Component {
               <Button type="block" action={() => app.goto(Splash)}>
                 HOME
               </Button>
-              <List select={(item) => console.log(item)}>
-                {[<div>yO</div>, <div>Bruh</div>, <div>Vrucs</div>, <div>Crud</div>]}
+              <List select={(item) => console.log(item.reactKey)}>
+                {[
+                  <div key="sdfja" id="3029">
+                    Maria
+                  </div>,
+                  <div key="yosaj" id="8379" abno="ksdjfa">
+                    23ss
+                  </div>,
+                  <div key="sjdk" id="1082">
+                    abno
+                  </div>,
+                  <div key="jsdk" id="8319">
+                    tanglo
+                  </div>,
+                ]}
               </List>
             </Card>
           </Screen>
