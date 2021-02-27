@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, Fragment } from 'react';
 import Splash from '../screens/Splash';
 import Screen from '../components/Screen';
 import Card from '../components/Card';
@@ -8,10 +8,9 @@ import Spacer from '../../generic-components/Spacer';
 import Box from '../../generic-components/Box';
 import List from '../../generic-components/List';
 import ListPit from '../components/ListPit';
-import OpenGameItem from '../components/OpenGameItem';
+import OpenGamesItem from '../components/OpenGamesItem';
 
 import AppContext from '../../AppContext';
-import ListItem from '../../generic-components/list/ListItem';
 
 // Server
 
@@ -34,7 +33,7 @@ const dataServer = {
       },
     },
     {
-      id: 'uihowr9',
+      id: 'uihowr3',
       name: 'Tanglo',
       boardSize: {
         w: 15,
@@ -42,7 +41,7 @@ const dataServer = {
       },
     },
     {
-      id: '263hed',
+      id: '263hed4',
       name: 'Brogodog',
       boardSize: {
         w: 21,
@@ -74,7 +73,7 @@ export default class OpenGames extends Component {
     const data = JSON.parse(dataString);
     const cleanData = this.validateData(data);
     if (cleanData.list === undefined) console.error('Fetched Data is not clean. Please check server');
-    then(cleanData);
+    else then(cleanData.list);
   }
 
   validateData(data) {
@@ -82,14 +81,22 @@ export default class OpenGames extends Component {
     if (data === undefined || data.list === undefined) dataIsGood = false;
     else {
       const { list } = data;
-      dataIsGood = list.every((item) => {
-        if (item === undefined) return false;
-        if (item.id === undefined) return false;
-        if (item.name === undefined) return false;
-        if (item.boardSize === undefined) return false;
-        if (item.boardSize.w === undefined) return false;
-        if (item.boardSize.h === undefined) return false;
+      dataIsGood = list.every((openGame) => {
+        if (openGame === undefined) return false;
+        if (openGame.id === undefined) return false;
+        if (openGame.name === undefined) return false;
+        if (openGame.boardSize === undefined) return false;
+        if (openGame.boardSize.w === undefined) return false;
+        if (openGame.boardSize.h === undefined) return false;
         return true;
+        /* Try object check {
+          id: String,
+          name: String,
+          boardSize: {
+            w: Number,
+            h: Number
+          }
+        } */
       });
     }
     if (!dataIsGood) return {};
@@ -97,14 +104,10 @@ export default class OpenGames extends Component {
     return data;
   }
 
-  populateList(data) {
-    // const data = JSON.parse(dataRaw);
-    const list = data.list || [];
-    const componentList = list.map((item) => <OpenGameItem key={item.id}>{item}</OpenGameItem>);
+  populateList(list) {
+    const openGames = list.map((openGame) => <OpenGamesItem key={openGame.id} value={openGame.id} data={openGame} />);
 
-    this.setState({
-      openGames: componentList,
-    });
+    this.setState({ openGames });
   }
 
   render() {
@@ -114,7 +117,7 @@ export default class OpenGames extends Component {
           <Screen type={'OpenGames'}>
             <Card>
               <Title>Open Games</Title>
-              <ListPit type="block" placeholder={<Title>Empty</Title>}>
+              <ListPit type="block" placeholder={<Title>Empty</Title>} select={(item) => console.log(item)}>
                 {this.state.openGames}
               </ListPit>
               <Spacer height={app.ui.buttonSpace} />

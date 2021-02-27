@@ -8,7 +8,9 @@ export default class ListPit extends Component {
     const items = this.props.children || [];
     return (
       <Pit type={'ListPit' + appendClassName(this.props.type)}>
-        <List select={(item) => console.log(item)}>{items.length ? items : this.props.placeholder}</List>
+        <List select={this.props.select} placeholder={this.props.placeholder}>
+          {items}
+        </List>
       </Pit>
     );
   }
