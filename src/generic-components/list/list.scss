@@ -9,7 +9,7 @@
   }
   .ListItem {
     &.selected {
-      box-shadow: 0 0 8px cyan, $shadow;
+      box-shadow: 0 0 8px 4px $focus-color, $shadow;
     }
   }
 }

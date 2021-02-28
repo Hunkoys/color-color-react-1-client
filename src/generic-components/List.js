@@ -71,6 +71,9 @@ export default class List extends Component {
   }
 
   deselect() {
+    const value = null;
+    this.sendToParent(value);
+
     return {
       selectedKey: null,
     };

@@ -114,6 +114,8 @@ export default class OpenGames extends Component {
 
   render() {
     console.log(this.state.selectedOpenGameId);
+    const mark = this.state.selectedOpenGameId !== null ? true : false;
+    console.log('mark', mark);
     return (
       <AppContext.Consumer>
         {(app) => (
@@ -135,7 +137,7 @@ export default class OpenGames extends Component {
                   REFRESH
                 </Button>
                 <Spacer width={app.ui.buttonSpace} />
-                <Button type="block" disabled={this.state.selectedOpenGameId ? false : true}>
+                <Button type="block" enabled={mark}>
                   JOIN
                 </Button>
               </Box>
