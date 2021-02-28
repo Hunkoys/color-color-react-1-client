@@ -113,6 +113,7 @@ export default class OpenGames extends Component {
   }
 
   render() {
+    console.log(this.state.selectedOpenGameId);
     return (
       <AppContext.Consumer>
         {(app) => (
@@ -123,13 +124,6 @@ export default class OpenGames extends Component {
                 type="block"
                 placeholder={<Title>Empty</Title>}
                 select={(selectedOpenGameId) => {
-                  this.setState((state) => {
-                    const brup = state.brup;
-                    brup.push(selectedOpenGameId);
-                    return {
-                      brup,
-                    };
-                  });
                   this.setState({ selectedOpenGameId });
                 }}
               >
@@ -141,7 +135,7 @@ export default class OpenGames extends Component {
                   REFRESH
                 </Button>
                 <Spacer width={app.ui.buttonSpace} />
-                <Button type="block" disabled={this.state.selectedGame ? false : true}>
+                <Button type="block" disabled={this.state.selectedOpenGameId ? false : true}>
                   JOIN
                 </Button>
               </Box>
@@ -149,7 +143,6 @@ export default class OpenGames extends Component {
               <Button type="block" action={() => app.goto(Splash)}>
                 HOME
               </Button>
-              <List select={(value) => console.log(value)}>{this.state.brup}</List>
             </Card>
           </Screen>
         )}
