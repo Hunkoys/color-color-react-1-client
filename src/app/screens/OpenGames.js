@@ -134,9 +134,9 @@ export default class OpenGames extends Component {
               <Button type="block" action={() => app.goto(Splash)}>
                 HOME
               </Button>
-              <List select={(item) => console.log(item.reactKey)}>
+              <List select={(value) => console.log(value)}>
                 {[
-                  <div key="sdfja" id="3029">
+                  <div key="sdfja" id="3029" value={'Maria'}>
                     Maria
                   </div>,
                   <div key="yosaj" id="8379" abno="ksdjfa">

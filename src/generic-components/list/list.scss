@@ -7,4 +7,9 @@
   > li {
     list-style-type: none;
   }
+  .ListItem {
+    &.selected {
+      box-shadow: 0 0 8px cyan, $shadow;
+    }
+  }
 }

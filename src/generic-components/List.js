@@ -8,8 +8,10 @@ class ListItem extends Component {
     const children = this.props.children;
     return (
       <li
-        className={'ListItem' + appendClassName(this.props.type)}
-        onClick={() => this.props.onSelect(children.props.value)}
+        className={
+          'ListItem' + appendClassName(this.props.type) + appendClassName(this.props.selected ? 'selected' : '')
+        }
+        onClick={() => this.props.onSelect(children)}
       >
         {children}
       </li>
@@ -30,22 +32,40 @@ class ListItem extends Component {
 export default class List extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selected: null,
-    };
+    this.state = {};
   }
 
   select(item) {
-    this.props.select(item);
+    this.setState((state) => {
+      const alreadySelected = state.selectedKey === item.key;
+
+      if (alreadySelected)
+        return {
+          selectedKey: null,
+        };
+      else
+        return {
+          selectedKey: item.key,
+        };
+    });
+
+    this.props.select(item.props.value);
   }
 
   render() {
-    const items = this.props.children || [];
+    const { children } = this.props;
+    const items = children instanceof Array ? children : [];
     return (
       <ul className={'List' + appendClassName(this.props.type)}>
         {items.length
           ? items.map((item) => {
-              return <ListItem onSelect={(item) => this.select(item)}>{item}</ListItem>;
+              const selected = this.state.selectedKey === item.key;
+
+              return (
+                <ListItem selected={selected} key={item.key} onSelect={(self) => this.select(self)}>
+                  {item}
+                </ListItem>
+              );
             })
           : this.props.placeholder}
       </ul>
