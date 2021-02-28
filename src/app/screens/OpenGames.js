@@ -60,6 +60,8 @@ export default class OpenGames extends Component {
     super(props);
     this.state = {
       openGames: [],
+      selectedOpenGameId: null,
+      brup: [],
     };
     this.populateList = this.populateList.bind(this);
   }
@@ -117,7 +119,20 @@ export default class OpenGames extends Component {
           <Screen type={'OpenGames'}>
             <Card>
               <Title>Open Games</Title>
-              <ListPit type="block" placeholder={<Title>Empty</Title>} select={(item) => console.log(item)}>
+              <ListPit
+                type="block"
+                placeholder={<Title>Empty</Title>}
+                select={(selectedOpenGameId) => {
+                  this.setState((state) => {
+                    const brup = state.brup;
+                    brup.push(selectedOpenGameId);
+                    return {
+                      brup,
+                    };
+                  });
+                  this.setState({ selectedOpenGameId });
+                }}
+              >
                 {this.state.openGames}
               </ListPit>
               <Spacer height={app.ui.buttonSpace} />
@@ -134,22 +149,7 @@ export default class OpenGames extends Component {
               <Button type="block" action={() => app.goto(Splash)}>
                 HOME
               </Button>
-              <List select={(value) => console.log(value)}>
-                {[
-                  <div key="sdfja" id="3029" value={'Maria'}>
-                    Maria
-                  </div>,
-                  <div key="yosaj" id="8379" abno="ksdjfa">
-                    23ss
-                  </div>,
-                  <div key="sjdk" id="1082">
-                    abno
-                  </div>,
-                  <div key="jsdk" id="8319">
-                    tanglo
-                  </div>,
-                ]}
-              </List>
+              <List select={(value) => console.log(value)}>{this.state.brup}</List>
             </Card>
           </Screen>
         )}

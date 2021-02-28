@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, Fragment } from 'react';
 import { appendClassName } from '../common/functions';
 
 // Currently unsafe
@@ -11,7 +11,7 @@ class ListItem extends Component {
         className={
           'ListItem' + appendClassName(this.props.type) + appendClassName(this.props.selected ? 'selected' : '')
         }
-        onClick={() => this.props.onSelect(children)}
+        onClick={() => this.props.onPress(children)}
       >
         {children}
       </li>
@@ -32,24 +32,64 @@ class ListItem extends Component {
 export default class List extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      selectedKey: null,
+      select: false,
+      value: null,
+    };
+  }
+
+  evaluate(item) {
+    this.setState((state) => {
+      const alreadySelected = state.selectedKey === item.key;
+      let select;
+
+      if (alreadySelected) select = false;
+      else select = true;
+
+      return { select };
+    });
+
+    this.act(item);
+  }
+
+  act(item) {
+    this.setState((state) => {
+      if (state.select) this.select(item);
+      else this.deselect(item);
+
+      return {};
+    });
   }
 
   select(item) {
     this.setState((state) => {
-      const alreadySelected = state.selectedKey === item.key;
+      const itemIsString = typeof item === 'string';
 
-      if (alreadySelected)
-        return {
-          selectedKey: null,
-        };
-      else
-        return {
-          selectedKey: item.key,
-        };
+      const value = itemIsString ? item : item.props.value;
+      this.props.select(value);
+
+      if (!itemIsString && item.props.value === undefined) {
+        console.warn(`List: one or more of List's items may not have a value prop`);
+      }
+
+      return {
+        selectedKey: item.key,
+        value,
+      };
     });
+  }
 
-    this.props.select(item.props.value);
+  deselect(item) {
+    this.setState((state) => {
+      const value = '';
+      this.props.select(value);
+
+      return {
+        selectedKey: null,
+        value,
+      };
+    });
   }
 
   render() {
@@ -59,10 +99,11 @@ export default class List extends Component {
       <ul className={'List' + appendClassName(this.props.type)}>
         {items.length
           ? items.map((item) => {
+              console.log('shit', item);
               const selected = this.state.selectedKey === item.key;
 
               return (
-                <ListItem selected={selected} key={item.key} onSelect={(self) => this.select(self)}>
+                <ListItem selected={selected} key={item.key} onPress={(self) => this.evaluate(self)}>
                   {item}
                 </ListItem>
               );
