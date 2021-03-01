@@ -134,7 +134,7 @@ export default class OpenGames extends Component {
                   REFRESH
                 </Button>
                 <Spacer width={app.ui.buttonSpace} />
-                <Button type="block" enabled={hasSelected} action={() => console.log(this.state.selectedOpenGameId)}>
+                <Button type="block" disabled={!hasSelected} action={() => console.log(this.state.selectedOpenGameId)}>
                   JOIN
                 </Button>
               </Box>

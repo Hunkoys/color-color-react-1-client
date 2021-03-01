@@ -11,14 +11,14 @@ export default class Button extends Component {
   }
 
   render() {
-    const enabled = this.props.enabled === false ? false : true;
+    const disabled = this.props.disabled === true ? true : false;
 
     let action = () => {};
-    if (this.props.action && enabled) {
+    if (this.props.action && !disabled) {
       action = () => this.props.action();
     }
 
-    const ableness = enabled ? states.default : states.disabled;
+    const ableness = disabled ? states.disabled : states.default;
 
     return (
       <div
