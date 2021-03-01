@@ -1,28 +1,32 @@
 import { Component } from 'react';
 import { appendClassName } from '../common/functions';
 
-const states = { normal: 'normal', pressed: 'pressed', hover: 'hover', disabled: 'disabled' };
-
-const enabled = '',
-  disabled = 'disabled';
+const states = { default: '', pressed: 'pressed', hover: 'hover', disabled: 'disabled' };
 export default class Button extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      className: '',
-      ableness: this.props.enabled === false ? disabled : enabled,
+      className: this.props.className,
     };
   }
 
   render() {
-    const action = this.props.action && this.props.ableness === enabled ? () => this.props.action() : () => {};
+    const enabled = this.props.enabled === false ? false : true;
+
+    let action = () => {};
+    if (this.props.action && enabled) {
+      action = () => this.props.action();
+    }
+
+    const ableness = enabled ? states.default : states.disabled;
+
     return (
       <div
         className={
           'Button' +
           appendClassName(this.state.className) +
           appendClassName(this.props.type) +
-          appendClassName(this.state.ableness)
+          appendClassName(ableness)
         }
         onClick={action}
         onMouseDown={() => this.setState({ className: `${states.hover} ${states.pressed}` })}
