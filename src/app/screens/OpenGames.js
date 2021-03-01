@@ -1,4 +1,4 @@
-import { Component, Fragment } from 'react';
+import { Component } from 'react';
 import Splash from '../screens/Splash';
 import Screen from '../components/Screen';
 import Card from '../components/Card';
@@ -6,7 +6,6 @@ import Title from '../components/Title';
 import Button from '../../generic-components/Button';
 import Spacer from '../../generic-components/Spacer';
 import Box from '../../generic-components/Box';
-import List from '../../generic-components/List';
 import ListPit from '../components/ListPit';
 import OpenGamesItem from '../components/OpenGamesItem';
 
