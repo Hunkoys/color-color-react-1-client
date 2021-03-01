@@ -13,6 +13,7 @@ $accent-color: #ed6d4b;
 $accent-color-shade: #d15533;
 
 $highlight-color: #00c3ff;
+$highlight-color-shade: #01a5d6;
 
 $focus-color: $highlight-color;
 
@@ -28,9 +29,13 @@ $max-width-mobile: 300px; // Temporary
 
 $card-width: 340px;
 
-$taper-sml: 5px;
-$taper-med: 10px;
-$taper-lrg: 20px;
+$padding-sml: 5px;
+$padding-med: 10px;
+$padding-lrg: 20px;
+
+$taper-sml: $padding-sml;
+$taper-med: $padding-med;
+$taper-lrg: $padding-lrg;
 
 $button-med: 40px;
 

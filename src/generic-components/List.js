@@ -6,14 +6,14 @@ import { appendClassName } from '../common/functions';
 class ListItem extends Component {
   render() {
     const children = this.props.children;
+    const selected = this.props.selected ? 'selected' : '';
+
     return (
       <li
-        className={
-          'ListItem' + appendClassName(this.props.type) + appendClassName(this.props.selected ? 'selected' : '')
-        }
+        className={'ListItem' + appendClassName(this.props.type) + appendClassName(selected)}
         onClick={() => this.props.onPress(children)}
       >
-        {children}
+        {<children.type {...children.props} type={appendClassName(selected)} />}
       </li>
     );
   }

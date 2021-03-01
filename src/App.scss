@@ -73,3 +73,13 @@ body {
     margin-bottom: 15px;
   }
 }
+
+.call-to-action {
+  .pill {
+    background: $highlight-color-shade;
+
+    button {
+      background: $highlight-color;
+    }
+  }
+}

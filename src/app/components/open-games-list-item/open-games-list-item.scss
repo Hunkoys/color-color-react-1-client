@@ -1,0 +1,31 @@
+.OpenGamesListItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $padding-med;
+
+  .name {
+    font-size: 2rem;
+  }
+
+  .board-size {
+    padding: $padding-med;
+    border-radius: $taper-sml;
+    background: $substance-color-shaded;
+
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: $text-color-dark;
+  }
+
+  &.selected {
+    .name {
+      color: $highlight-color;
+    }
+
+    .board-size {
+      color: $text-color-light;
+      background: $highlight-color;
+    }
+  }
+}

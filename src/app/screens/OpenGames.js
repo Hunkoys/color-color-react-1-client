@@ -7,7 +7,7 @@ import Button from '../../generic-components/Button';
 import Spacer from '../../generic-components/Spacer';
 import Box from '../../generic-components/Box';
 import ListPit from '../components/ListPit';
-import OpenGamesItem from '../components/OpenGamesItem';
+import OpenGamesListItem from '../components/OpenGamesListItem';
 
 import AppContext from '../../AppContext';
 
@@ -106,7 +106,9 @@ export default class OpenGames extends Component {
   }
 
   populateList(list) {
-    const openGames = list.map((openGame) => <OpenGamesItem key={openGame.id} value={openGame.id} data={openGame} />);
+    const openGames = list.map((openGame) => (
+      <OpenGamesListItem key={openGame.id} value={openGame.id} data={openGame} />
+    ));
 
     this.setState({ openGames });
   }
@@ -134,7 +136,11 @@ export default class OpenGames extends Component {
                   REFRESH
                 </Button>
                 <Spacer width={app.ui.buttonSpace} />
-                <Button type="block" disabled={!hasSelected} action={() => console.log(this.state.selectedOpenGameId)}>
+                <Button
+                  type="block call-to-action"
+                  disabled={!hasSelected}
+                  action={() => console.log(this.state.selectedOpenGameId)}
+                >
                   JOIN
                 </Button>
               </Box>
