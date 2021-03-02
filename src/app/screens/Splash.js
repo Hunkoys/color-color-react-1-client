@@ -18,18 +18,19 @@ export default class Splash extends Component {
     return (
       <AppContext.Consumer>
         {(app) => {
+          const [screen, goto] = app.screenHook;
           return (
             <Screen type="Splash">
               <Card>
                 <Title type="game-title">Color Color</Title>
                 <Spacer height="16px" />
-                <TextBox store={app.username} placeholder=" Your Name" spellCheck="false" />
+                <TextBox hook={app.usernameHook} placeholder=" Your Name" spellCheck="false" />
                 <Spacer height="16px" />
-                <Button type="block" action={() => app.goto(CreateBoard)}>
+                <Button type="block" action={() => goto(CreateBoard)}>
                   NEW GAME
                 </Button>
                 <Spacer height={app.ui.buttonSpace} />
-                <Button type="block" action={() => app.goto(OpenGames)}>
+                <Button type="block" action={() => goto(OpenGames)}>
                   JOIN GAME
                 </Button>
               </Card>

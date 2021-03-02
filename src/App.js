@@ -12,18 +12,13 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      screen: OpenGames,
-      username: '',
+      screen: Splash,
+      username: document.cookie.replace('name=', ''),
     };
 
     const elementSpace = '12px';
 
-    this.appInterface = {
-      state: this.state,
-      goto: (screen) => {
-        this.setState({ screen });
-      },
-      username: new Accessor(this, 'username'),
+    this.interface = {
       ui: {
         elementSpace: elementSpace,
         buttonSpace: elementSpace,
@@ -33,8 +28,21 @@ export default class App extends Component {
   }
 
   render() {
+    this.interface.usernameHook = [
+      this.state.username,
+      (username) => {
+        document.cookie = `name=${username}`;
+        this.setState({ username });
+      },
+    ];
+    this.interface.screenHook = [
+      this.state.screen,
+      (screen) => {
+        this.setState({ screen });
+      },
+    ];
     return (
-      <AppContext.Provider value={this.appInterface}>
+      <AppContext.Provider value={this.interface}>
         <this.state.screen />
       </AppContext.Provider>
     );

@@ -117,40 +117,43 @@ export default class OpenGames extends Component {
     const hasSelected = this.state.selectedOpenGameId ? true : false;
     return (
       <AppContext.Consumer>
-        {(app) => (
-          <Screen type={'OpenGames'}>
-            <Card>
-              <Title>Open Games</Title>
-              <ListPit
-                type="block"
-                placeholder={<Title>Empty</Title>}
-                select={(selectedOpenGameId) => {
-                  this.setState({ selectedOpenGameId });
-                }}
-              >
-                {this.state.openGames}
-              </ListPit>
-              <Spacer height={app.ui.buttonSpace} />
-              <Box type="button-bar bb-horizontal">
-                <Button type="block" action={() => this.fetchList(this.populateList)}>
-                  REFRESH
-                </Button>
-                <Spacer width={app.ui.buttonSpace} />
-                <Button
-                  type="block call-to-action"
-                  disabled={!hasSelected}
-                  action={() => console.log(this.state.selectedOpenGameId)}
+        {(app) => {
+          const [screen, goto] = app.screenHook;
+          return (
+            <Screen type={'OpenGames'}>
+              <Card>
+                <Title>Open Games</Title>
+                <ListPit
+                  type="block"
+                  placeholder={<Title>Empty</Title>}
+                  select={(selectedOpenGameId) => {
+                    this.setState({ selectedOpenGameId });
+                  }}
                 >
-                  JOIN
+                  {this.state.openGames}
+                </ListPit>
+                <Spacer height={app.ui.buttonSpace} />
+                <Box type="button-bar bb-horizontal">
+                  <Button type="block" action={() => this.fetchList(this.populateList)}>
+                    REFRESH
+                  </Button>
+                  <Spacer width={app.ui.buttonSpace} />
+                  <Button
+                    type="block call-to-action"
+                    disabled={!hasSelected}
+                    action={() => console.log(this.state.selectedOpenGameId)}
+                  >
+                    JOIN
+                  </Button>
+                </Box>
+                <Spacer height={app.ui.backButtonSpace} />
+                <Button type="block" action={() => goto(Splash)}>
+                  HOME
                 </Button>
-              </Box>
-              <Spacer height={app.ui.backButtonSpace} />
-              <Button type="block" action={() => app.goto(Splash)}>
-                HOME
-              </Button>
-            </Card>
-          </Screen>
-        )}
+              </Card>
+            </Screen>
+          );
+        }}
       </AppContext.Consumer>
     );
   }

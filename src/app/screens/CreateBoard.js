@@ -12,22 +12,25 @@ export default class CreateBoard extends Component {
   render() {
     return (
       <AppContext.Consumer>
-        {(app) => (
-          <Screen type={'CreateBoard'}>
-            <Card>
-              <Title>Board Size</Title>
-              <Button type="block">7 x 7</Button>
-              <Spacer height={app.ui.buttonSpace} />
-              <Button type="block">11 x 11</Button>
-              <Spacer height={app.ui.buttonSpace} />
-              <Button type="block">15 x 15</Button>
-              <Spacer height={app.ui.backButtonSpace} />
-              <Button type="block" action={() => app.goto(Splash)}>
-                HOME
-              </Button>
-            </Card>
-          </Screen>
-        )}
+        {(app) => {
+          const [screen, goto] = app.screenHook;
+          return (
+            <Screen type={'CreateBoard'}>
+              <Card>
+                <Title>Board Size</Title>
+                <Button type="block">7 x 7</Button>
+                <Spacer height={app.ui.buttonSpace} />
+                <Button type="block">11 x 11</Button>
+                <Spacer height={app.ui.buttonSpace} />
+                <Button type="block">15 x 15</Button>
+                <Spacer height={app.ui.backButtonSpace} />
+                <Button type="block" action={() => goto(Splash)}>
+                  HOME
+                </Button>
+              </Card>
+            </Screen>
+          );
+        }}
       </AppContext.Consumer>
     );
   }

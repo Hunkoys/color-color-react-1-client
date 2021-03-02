@@ -10,14 +10,16 @@ export default class TextBox extends Component {
   }
 
   render() {
+    const [value, setValue] = this.props.hook;
+    console.log(value);
     return (
       <section className={'TextBox' + appendClassName(this.props.type)}>
         <input
           className="input"
           type="text"
           placeholder={this.props.placeholder}
-          onChange={({ target }) => this.props.store.set(target.value)}
-          defaultValue={this.props.store.get()}
+          onChange={({ target }) => setValue(target.value)}
+          defaultValue={value}
           spellCheck={this.props.spellCheck}
         />
       </section>
