@@ -23,13 +23,13 @@ export default class Splash extends Component {
             <Screen type="Splash">
               <Card>
                 <Title type="game-title">Color Color</Title>
-                <Spacer height="16px" />
+                <Spacer type="h-gutter" />
                 <TextBox hook={app.usernameHook} placeholder=" Your Name" spellCheck="false" />
-                <Spacer height="16px" />
+                <Spacer type="h-gutter" />
                 <Button type="block" action={() => goto(CreateBoard)}>
                   NEW GAME
                 </Button>
-                <Spacer height={app.ui.buttonSpace} />
+                <Spacer type="h-gutter" />
                 <Button type="block" action={() => goto(OpenGames)}>
                   JOIN GAME
                 </Button>

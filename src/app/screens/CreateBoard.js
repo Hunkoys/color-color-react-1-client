@@ -19,11 +19,11 @@ export default class CreateBoard extends Component {
               <Card>
                 <Title>Board Size</Title>
                 <Button type="block">7 x 7</Button>
-                <Spacer height={app.ui.buttonSpace} />
+                <Spacer type="h-gutter" />
                 <Button type="block">11 x 11</Button>
-                <Spacer height={app.ui.buttonSpace} />
+                <Spacer type="h-gutter" />
                 <Button type="block">15 x 15</Button>
-                <Spacer height={app.ui.backButtonSpace} />
+                <Spacer type="back-button-space" />
                 <Button type="block" action={() => goto(Splash)}>
                   HOME
                 </Button>

@@ -16,15 +16,7 @@ export default class App extends Component {
       username: document.cookie.replace('name=', ''),
     };
 
-    const elementSpace = '12px';
-
-    this.interface = {
-      ui: {
-        elementSpace: elementSpace,
-        buttonSpace: elementSpace,
-        backButtonSpace: '36px',
-      },
-    };
+    this.interface = {};
   }
 
   render() {

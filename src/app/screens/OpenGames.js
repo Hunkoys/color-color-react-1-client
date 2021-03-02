@@ -132,12 +132,12 @@ export default class OpenGames extends Component {
                 >
                   {this.state.openGames}
                 </ListPit>
-                <Spacer height={app.ui.buttonSpace} />
+                <Spacer type="h-gutter" />
                 <Box type="button-bar bb-horizontal">
                   <Button type="block" action={() => this.fetchList(this.populateList)}>
                     REFRESH
                   </Button>
-                  <Spacer width={app.ui.buttonSpace} />
+                  <Spacer type="v-gutter" />
                   <Button
                     type="block call-to-action"
                     disabled={!hasSelected}
@@ -146,7 +146,7 @@ export default class OpenGames extends Component {
                     JOIN
                   </Button>
                 </Box>
-                <Spacer height={app.ui.backButtonSpace} />
+                <Spacer type="back-button-space" />
                 <Button type="block" action={() => goto(Splash)}>
                   HOME
                 </Button>

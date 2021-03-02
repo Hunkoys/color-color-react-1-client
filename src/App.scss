@@ -82,3 +82,26 @@ body {
     }
   }
 }
+
+.Spacer {
+  $other: 100%;
+
+  &.h-gutter {
+    width: $other;
+    height: $h-gutter;
+  }
+
+  &.v-gutter {
+    width: $v-gutter;
+    height: $other;
+  }
+
+  &.h-gutter.v-gutter {
+    width: $v-gutter;
+    height: $h-gutter;
+  }
+
+  &.back-button-space {
+    height: $space-lrg;
+  }
+}
