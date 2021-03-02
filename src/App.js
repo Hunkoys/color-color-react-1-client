@@ -16,7 +16,7 @@ export default class App extends Component {
       username: document.cookie.replace('name=', ''),
     };
 
-    this.interface = {};
+    this.interface = {}; // maybe not necessary here.
   }
 
   render() {
@@ -33,6 +33,7 @@ export default class App extends Component {
         this.setState({ screen });
       },
     ];
+
     return (
       <AppContext.Provider value={this.interface}>
         <this.state.screen />
