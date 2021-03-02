@@ -63,18 +63,31 @@ export default class OpenGames extends Component {
       brup: [],
     };
     this.populateList = this.populateList.bind(this);
+
+    fetch('data').then((res) => console.log(res.status));
   }
 
   componentDidMount() {
     this.fetchList(this.populateList);
   }
 
-  fetchList(then) {
-    console.log('Fetched data');
-    const data = JSON.parse(dataString);
-    const cleanData = this.validateData(data);
-    if (cleanData.list === undefined) console.error('Fetched Data is not clean. Please check server');
-    else then(cleanData.list);
+  fetchList(callback) {
+    fetch('api/data').then((res) => {
+      if (res.status !== 200) {
+        console.log(`Looks like there was a problem. Status Code: ${res.status}`);
+        callback([]);
+        return;
+      }
+
+      res.json().then((data) => {
+        console.log('Fetched data', data);
+        const cleanData = this.validateData(data);
+        if (cleanData.list === undefined) {
+          console.error('Fetched Data is not clean. Please check server');
+          callback([]);
+        } else callback(cleanData.list);
+      });
+    });
   }
 
   validateData(data) {
