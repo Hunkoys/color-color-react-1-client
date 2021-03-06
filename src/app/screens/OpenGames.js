@@ -63,30 +63,48 @@ export default class OpenGames extends Component {
       brup: [],
     };
     this.populateList = this.populateList.bind(this);
-
-    fetch('data').then((res) => console.log(res.status));
   }
 
   componentDidMount() {
-    this.fetchList(this.populateList);
+    this.fetchList().then((list) => this.populateList(list));
   }
 
   fetchList(callback) {
-    fetch('api/data').then((res) => {
+    // fetch('api/data')
+    //   .then((res) => {
+    //     if (res.status !== 200) {
+    //       console.log(`Looks like there was a problem. Status Code: ${res.status}`);
+    //       callback([]);
+    //       return;
+    //     }
+
+    //     return res.json();
+    //   })
+    //   .then((data) => {
+    //     console.log('Fetched data', data);
+    //     const cleanData = this.validateData(data);
+    //     if (cleanData.list === undefined) {
+    //       console.error('Fetched Data is not clean. Please check server');
+    //       callback([]);
+    //     } else callback(cleanData.list);
+    //   });
+
+    return new Promise(async (resolve, reject) => {
+      const res = await fetch('api/data');
+
       if (res.status !== 200) {
         console.log(`Looks like there was a problem. Status Code: ${res.status}`);
-        callback([]);
+        reject([]);
         return;
       }
 
-      res.json().then((data) => {
-        console.log('Fetched data', data);
-        const cleanData = this.validateData(data);
-        if (cleanData.list === undefined) {
-          console.error('Fetched Data is not clean. Please check server');
-          callback([]);
-        } else callback(cleanData.list);
-      });
+      const data = await res.json();
+      console.log('Fetched data', data);
+      const cleanData = this.validateData(data);
+      if (cleanData.list === undefined) {
+        console.error('Fetched Data is not clean. Please check server');
+        reject([]);
+      } else resolve(cleanData.list);
     });
   }
 
@@ -147,7 +165,7 @@ export default class OpenGames extends Component {
                 </ListPit>
                 <Spacer type="h-gutter" />
                 <Box type="button-bar bb-horizontal">
-                  <Button type="block" action={() => this.fetchList(this.populateList)}>
+                  <Button type="block" action={() => this.fetchList().then((list) => this.populateList(list))}>
                     REFRESH
                   </Button>
                   <Spacer type="v-gutter" />
