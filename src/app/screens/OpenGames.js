@@ -65,30 +65,11 @@ export default class OpenGames extends Component {
     this.populateList = this.populateList.bind(this);
   }
 
-  componentDidMount() {
-    this.fetchList().then((list) => this.populateList(list));
+  async componentDidMount() {
+    this.getList();
   }
 
-  fetchList(callback) {
-    // fetch('api/data')
-    //   .then((res) => {
-    //     if (res.status !== 200) {
-    //       console.log(`Looks like there was a problem. Status Code: ${res.status}`);
-    //       callback([]);
-    //       return;
-    //     }
-
-    //     return res.json();
-    //   })
-    //   .then((data) => {
-    //     console.log('Fetched data', data);
-    //     const cleanData = this.validateData(data);
-    //     if (cleanData.list === undefined) {
-    //       console.error('Fetched Data is not clean. Please check server');
-    //       callback([]);
-    //     } else callback(cleanData.list);
-    //   });
-
+  fetchList() {
     return new Promise(async (resolve, reject) => {
       const res = await fetch('api/data');
 
@@ -144,6 +125,11 @@ export default class OpenGames extends Component {
     this.setState({ openGames });
   }
 
+  async getList() {
+    const data = await this.fetchList();
+    this.populateList(data);
+  }
+
   render() {
     const hasSelected = this.state.selectedOpenGameId ? true : false;
     return (
@@ -165,7 +151,7 @@ export default class OpenGames extends Component {
                 </ListPit>
                 <Spacer type="h-gutter" />
                 <Box type="button-bar bb-horizontal">
-                  <Button type="block" action={() => this.fetchList().then((list) => this.populateList(list))}>
+                  <Button type="block" action={this.getList.bind(this)}>
                     REFRESH
                   </Button>
                   <Spacer type="v-gutter" />
