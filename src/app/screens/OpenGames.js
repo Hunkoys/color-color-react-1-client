@@ -10,6 +10,7 @@ import ListPit from '../components/ListPit';
 import OpenGamesListItem from '../components/OpenGamesListItem';
 
 import AppContext from '../../AppContext';
+import { get, post } from '../../common/network';
 
 // Server
 
@@ -60,33 +61,25 @@ export default class OpenGames extends Component {
     this.state = {
       openGames: [],
       selectedOpenGameId: null,
-      brup: [],
     };
     this.populateList = this.populateList.bind(this);
   }
 
   async componentDidMount() {
-    this.getList();
+    this.showList();
   }
 
-  fetchList() {
-    return new Promise(async (resolve, reject) => {
-      const res = await fetch('api/data');
-
-      if (res.status !== 200) {
-        console.log(`Looks like there was a problem. Status Code: ${res.status}`);
-        reject([]);
-        return;
-      }
-
-      const data = await res.json();
-      console.log('Fetched data', data);
-      const cleanData = this.validateData(data);
-      if (cleanData.list === undefined) {
-        console.error('Fetched Data is not clean. Please check server');
-        reject([]);
-      } else resolve(cleanData.list);
-    });
+  showList() {
+    get('data')
+      .then((data) => {
+        if (this.validateData(data)) {
+          const { list } = data;
+          this.populateList(list);
+        }
+      })
+      .catch((msg) => {
+        console.error(msg);
+      });
   }
 
   validateData(data) {
@@ -112,9 +105,7 @@ export default class OpenGames extends Component {
         } */
       });
     }
-    if (!dataIsGood) return {};
-
-    return data;
+    return dataIsGood;
   }
 
   populateList(list) {
@@ -125,13 +116,9 @@ export default class OpenGames extends Component {
     this.setState({ openGames });
   }
 
-  async getList() {
-    const data = await this.fetchList();
-    this.populateList(data);
-  }
-
   render() {
-    const hasSelected = this.state.selectedOpenGameId ? true : false;
+    const somethingSelected = this.state.selectedOpenGameId ? true : false;
+
     return (
       <AppContext.Consumer>
         {(app) => {
@@ -151,14 +138,18 @@ export default class OpenGames extends Component {
                 </ListPit>
                 <Spacer type="h-gutter" />
                 <Box type="button-bar bb-horizontal">
-                  <Button type="block" action={this.getList.bind(this)}>
+                  <Button type="block" action={this.showList.bind(this)}>
                     REFRESH
                   </Button>
                   <Spacer type="v-gutter" />
                   <Button
                     type="block call-to-action"
-                    disabled={!hasSelected}
-                    action={() => console.log(this.state.selectedOpenGameId)}
+                    disabled={somethingSelected === false}
+                    action={() => {
+                      console.log(this.state.selectedOpenGameId);
+                      post('bro', 'Hi there');
+                      get('bro').then((data) => console.log(data));
+                    }}
                   >
                     JOIN
                   </Button>
