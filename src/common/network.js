@@ -1,7 +1,7 @@
-import { pack, unpack } from './packer';
+import { pack, unpack } from './network/packer';
 
-export const get = async (path) => {
-  const response = await fetch(`api/${path}`);
+export const get = async (path, options) => {
+  const response = await fetch(path);
   if (response.status !== 200) {
     console.error(`Something went wrong in fetching data from the server. Error: ${response.status}`);
     return;
@@ -12,13 +12,13 @@ export const get = async (path) => {
   return unpack(packet);
 };
 
-export const post = async (path, value) => {
-  const response = await fetch(`api/${path}`, {
+export const post = async (path, contents) => {
+  const response = await fetch(path, {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: pack(value),
+    body: pack(contents),
   });
-  return response;
+  return response.statusText;
 };

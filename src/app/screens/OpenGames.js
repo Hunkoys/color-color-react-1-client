@@ -12,49 +12,6 @@ import OpenGamesListItem from '../components/OpenGamesListItem';
 import AppContext from '../../AppContext';
 import { get, post } from '../../common/network';
 
-// Server
-
-const dataServer = {
-  list: [
-    {
-      id: 'skaj1',
-      name: 'Maria',
-      boardSize: {
-        w: 15,
-        h: 15,
-      },
-    },
-    {
-      id: 'hueq2',
-      name: 'John',
-      boardSize: {
-        w: 7,
-        h: 7,
-      },
-    },
-    {
-      id: 'uihowr3',
-      name: 'Tanglo',
-      boardSize: {
-        w: 15,
-        h: 15,
-      },
-    },
-    {
-      id: '263hed4',
-      name: 'Brogodog',
-      boardSize: {
-        w: 21,
-        h: 21,
-      },
-    },
-  ],
-};
-
-const dataString = JSON.stringify(dataServer);
-
-// Server
-
 export default class OpenGames extends Component {
   constructor(props) {
     super(props);
@@ -70,7 +27,7 @@ export default class OpenGames extends Component {
   }
 
   showList() {
-    get('data')
+    get('api/data')
       .then((data) => {
         if (this.validateData(data)) {
           const { list } = data;
@@ -146,9 +103,7 @@ export default class OpenGames extends Component {
                     type="block call-to-action"
                     disabled={somethingSelected === false}
                     action={() => {
-                      console.log(this.state.selectedOpenGameId);
-                      post('bro', 'Hi there');
-                      get('bro').then((data) => console.log(data));
+                      post('api/join', this.state.selectedOpenGameId);
                     }}
                   >
                     JOIN
