@@ -12,7 +12,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      screen: OpenGames,
+      screen: CreateBoard,
       username: document.cookie.replace('name=', ''),
     };
 

@@ -19,19 +19,17 @@ export default class OpenGames extends Component {
       openGames: [],
       selectedOpenGameId: null,
     };
-    this.populateList = this.populateList.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.showList();
   }
 
   showList() {
-    get('api/data')
-      .then((data) => {
-        if (this.validateData(data)) {
-          const { list } = data;
-          this.populateList(list);
+    get('api/open-games')
+      .then((openGames) => {
+        if (this.validateList(openGames)) {
+          this.setState({ openGames });
         }
       })
       .catch((msg) => {
@@ -39,12 +37,11 @@ export default class OpenGames extends Component {
       });
   }
 
-  validateData(data) {
+  validateList(openGames) {
     let dataIsGood = true;
-    if (data === undefined || data.list === undefined) dataIsGood = false;
+    if (openGames === undefined) dataIsGood = false;
     else {
-      const { list } = data;
-      dataIsGood = list.every((openGame) => {
+      dataIsGood = openGames.every((openGame) => {
         if (openGame === undefined) return false;
         if (openGame.id === undefined) return false;
         if (openGame.name === undefined) return false;
@@ -65,14 +62,6 @@ export default class OpenGames extends Component {
     return dataIsGood;
   }
 
-  populateList(list) {
-    const openGames = list.map((openGame) => (
-      <OpenGamesListItem key={openGame.id} value={openGame.id} data={openGame} />
-    ));
-
-    this.setState({ openGames });
-  }
-
   render() {
     const somethingSelected = this.state.selectedOpenGameId ? true : false;
 
@@ -91,7 +80,9 @@ export default class OpenGames extends Component {
                     this.setState({ selectedOpenGameId });
                   }}
                 >
-                  {this.state.openGames}
+                  {this.state.openGames.map((openGame) => (
+                    <OpenGamesListItem key={openGame.id} value={openGame.id} data={openGame} />
+                  ))}
                 </ListPit>
                 <Spacer type="h-gutter" />
                 <Box type="button-bar bb-horizontal">
