@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { getCookie } from '../../common/functions';
 import Screen from '../components/Screen';
 import Title from '../components/Title';
 import Card from '../components/Card';
@@ -7,63 +8,57 @@ import Splash from './Splash';
 
 import AppContext from '../../AppContext';
 import Spacer from '../../generic-components/Spacer';
-import { post, get } from '../../common/network';
+import { server } from '../../common/network';
+import GameScreen from './GameScreen';
 import Game from '../data/Game';
+import Size from '../data/Size';
+import LoadingScreen from './LoadingScreen';
 
 function createGame(username, boardSize) {
-  post('api/create-game', {
-    host: username,
-    boardSize,
-  });
+  const cookie = getCookie();
+  const game = Game({});
+  game.host.username = cookie.username;
+  game.host.playerId = cookie.playerId;
+  game.board.size = boardSize;
+  return server('create game', game);
 }
 
 class CreateBoardButton extends Component {
   render() {
-    const game = Game({
-      challenger: 'dogo',
-      host: 'nick',
-    });
-
-    post('bro', game);
-    get('bro')
-      .then((data) => {
-        const game = Game(data);
-        game.board.size.w = 23;
-        return post('bro', game);
-      })
-      .then(() => get('bro'))
-      .then((data) => {
-        const game = Game(data);
-        console.table(game);
-      });
-    console.table(game);
     const size = this.props.size;
     return (
       <AppContext.Consumer>
         {(app) => {
           const [username] = app.usernameHook;
-          return <Button type="block" action={() => createGame(username, size)}>{`${size.w} x ${size.h}`}</Button>;
+          const [screen, setScreen] = app.screenHook;
+          return (
+            <Button
+              type="block"
+              action={() => {
+                createGame(username, size).then(() => setScreen(GameScreen));
+                setScreen(LoadingScreen);
+              }}
+            >{`${size.w} x ${size.h}`}</Button>
+          );
         }}
       </AppContext.Consumer>
     );
   }
 }
 
+function createCube(l) {
+  const size = Size({});
+  size.w = l;
+  size.h = l;
+  return size;
+}
+
 const boardSizes = {
-  small: {
-    w: 7,
-    h: 7,
-  },
-  medium: {
-    w: 11,
-    h: 11,
-  },
-  large: {
-    w: 15,
-    h: 15,
-  },
+  small: createCube(7),
+  medium: createCube(9),
+  large: createCube(11),
 };
-export default class CreateBoard extends Component {
+export default class CreateGameScreen extends Component {
   render() {
     const { small, medium, large } = boardSizes;
     return (
@@ -72,7 +67,7 @@ export default class CreateBoard extends Component {
           const [screen, goto] = app.screenHook;
 
           return (
-            <Screen type={'CreateBoard'}>
+            <Screen name="CreateBoard">
               <Card>
                 <Title>Board Size</Title>
                 <CreateBoardButton size={small} />

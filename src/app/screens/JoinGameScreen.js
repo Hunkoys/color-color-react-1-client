@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import Splash from '../screens/Splash';
+import Splash from './Splash';
 import Screen from '../components/Screen';
 import Card from '../components/Card';
 import Title from '../components/Title';
@@ -11,13 +11,17 @@ import OpenGamesListItem from '../components/OpenGamesListItem';
 
 import AppContext from '../../AppContext';
 import { get, post } from '../../common/network';
+import Game from '../data/Game';
+import LoadingScreen from './LoadingScreen';
+import GameScreen from './GameScreen';
 
-export default class OpenGames extends Component {
+export default class JoinGameScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       openGames: [],
       selectedOpenGameId: null,
+      listPlaceholder: <Title>Empty</Title>,
     };
   }
 
@@ -26,6 +30,10 @@ export default class OpenGames extends Component {
   }
 
   showList() {
+    this.setState({
+      openGames: [],
+      listPlaceholder: <Title>...</Title>,
+    });
     get('api/open-games')
       .then((openGames) => {
         if (this.validateList(openGames)) {
@@ -34,6 +42,9 @@ export default class OpenGames extends Component {
       })
       .catch((msg) => {
         console.error(msg);
+      })
+      .finally(() => {
+        this.setState({ listPlaceholder: <Title>Empty</Title> });
       });
   }
 
@@ -42,21 +53,14 @@ export default class OpenGames extends Component {
     if (openGames === undefined) dataIsGood = false;
     else {
       dataIsGood = openGames.every((openGame) => {
-        if (openGame === undefined) return false;
-        if (openGame.id === undefined) return false;
-        if (openGame.name === undefined) return false;
-        if (openGame.boardSize === undefined) return false;
-        if (openGame.boardSize.w === undefined) return false;
-        if (openGame.boardSize.h === undefined) return false;
+        const game = Game(openGame);
+        if (game === undefined) return false;
+        if (game.id === undefined) return false;
+        if (game.host.username === undefined) return false;
+        if (game.board === undefined) return false;
+        if (game.board.size.w === undefined) return false;
+        if (game.board.size.h === undefined) return false;
         return true;
-        /* Try object check {
-          id: String,
-          name: String,
-          boardSize: {
-            w: Number,
-            h: Number
-          }
-        } */
       });
     }
     return dataIsGood;
@@ -70,12 +74,12 @@ export default class OpenGames extends Component {
         {(app) => {
           const [screen, goto] = app.screenHook;
           return (
-            <Screen type={'OpenGames'}>
+            <Screen name="OpenGames">
               <Card>
                 <Title>Open Games</Title>
                 <ListPit
                   type="block"
-                  placeholder={<Title>Empty</Title>}
+                  placeholder={this.state.listPlaceholder}
                   select={(selectedOpenGameId) => {
                     this.setState({ selectedOpenGameId });
                   }}
@@ -94,7 +98,8 @@ export default class OpenGames extends Component {
                     type="block call-to-action"
                     disabled={somethingSelected === false}
                     action={() => {
-                      post('api/join', this.state.selectedOpenGameId);
+                      goto(LoadingScreen);
+                      post('api/join-game', this.state.selectedOpenGameId).then(() => goto(GameScreen));
                     }}
                   >
                     JOIN

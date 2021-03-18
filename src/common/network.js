@@ -20,5 +20,12 @@ export const post = async (path, contents) => {
     },
     body: pack(contents),
   });
-  return response.statusText;
+  return response;
+};
+
+export const server = async (command, data) => {
+  const response = await post(`color-color/${command}`, data);
+  const packet = await response.json();
+
+  return unpack(packet);
 };

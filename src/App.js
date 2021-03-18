@@ -1,29 +1,41 @@
 import { Component } from 'react';
-import { Accessor } from './common/classes';
+import { getCookie, setCookie } from './common/functions';
 import Splash from './app/screens/Splash';
 import AppContext from './AppContext';
 
 import './app.scss';
 
-import CreateBoard from './app/screens/CreateBoard';
-import OpenGames from './app/screens/OpenGames';
+import CreateGameScreen from './app/screens/CreateGameScreen';
+import JoinGameScreen from './app/screens/JoinGameScreen';
+import LoadingScreen from './app/screens/LoadingScreen';
+import { get, server } from './common/network';
+import Game from './app/screens/GameScreen';
+
+const cookie = getCookie();
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      screen: CreateBoard,
-      username: document.cookie.replace('name=', ''),
+      screen: LoadingScreen,
+      username: cookie.username,
     };
 
     this.interface = {}; // maybe not necessary here.
+
+    server('index').then(({ inGame, id }) => {
+      const screen = inGame ? Game : Splash;
+      this.setState({ screen });
+
+      if (id) setCookie({ id });
+    });
   }
 
   render() {
     this.interface.usernameHook = [
       this.state.username,
       (username) => {
-        document.cookie = `name=${username}`;
+        setCookie({ username });
         this.setState({ username });
       },
     ];

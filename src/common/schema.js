@@ -3,12 +3,6 @@ export { string, number, boolean, array, container, invalid };
 
 let evaluatedSchema;
 
-const stack = {
-  functionName(index) {
-    return new Error().stack.split('at ')[index - 1].split(' ')[0];
-  },
-};
-
 const represent = (value) => {
   if (checkType(value, array)) {
     let arrayRepresentation = '';
@@ -24,7 +18,7 @@ const represent = (value) => {
 };
 
 export default function process(schema, assumed) {
-  evaluatedSchema = stack.functionName(4);
+  evaluatedSchema = 'Some Object';
   fill(schema, assumed);
   evaluatedSchema = undefined;
 }
