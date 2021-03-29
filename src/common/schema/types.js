@@ -14,7 +14,7 @@ typeCheckers[string] = (value) => {
 };
 
 typeCheckers[number] = (value) => {
-  if (value instanceof Number || typeof value === 'number') return true;
+  if (value instanceof Number || (typeof value === 'number' && !isNaN(value))) return true;
   else return false;
 };
 

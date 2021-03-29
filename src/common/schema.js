@@ -3,7 +3,15 @@ export { string, number, boolean, array, container, invalid };
 
 let evaluatedSchema;
 
-const represent = (value) => {
+function tryParse(value, type) {
+  if (type === number) {
+    if (checkType(value, string)) value = Number(value);
+  }
+
+  return value;
+}
+
+function represent(value) {
   if (checkType(value, array)) {
     let arrayRepresentation = '';
 
@@ -15,7 +23,7 @@ const represent = (value) => {
     return `[ ${arrayRepresentation} ]`;
   } else if (checkType(value, string)) return `'${value}'`;
   else return value;
-};
+}
 
 export default function process(schema, assumed) {
   evaluatedSchema = 'Some Object';
@@ -30,18 +38,18 @@ function fill(schema, assumed) {
   let nothingInCommon = true;
 
   Object.keys(schema).forEach((key) => {
-    const value = assumed[key];
-
     nothingInCommon = nothingInCommon && false;
 
-    const valueIsContainer = checkType(schema[key], container);
-    const type = valueIsContainer ? container : schema[key];
+    const valueShouldBeContainer = checkType(schema[key], container);
+    const type = valueShouldBeContainer ? container : schema[key];
+
+    const value = tryParse(assumed[key], type);
 
     const valueIsEmpty = value === undefined || value === null;
     const valueIsValid = checkType(value, type);
 
     if (valueIsValid || valueIsEmpty) {
-      if (valueIsContainer) {
+      if (valueShouldBeContainer) {
         const proxy = valueIsEmpty ? {} : value;
         fill(schema[key], proxy);
       } else {

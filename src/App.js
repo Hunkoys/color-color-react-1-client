@@ -9,7 +9,7 @@ import CreateGameScreen from './app/screens/CreateGameScreen';
 import JoinGameScreen from './app/screens/JoinGameScreen';
 import LoadingScreen from './app/screens/LoadingScreen';
 import { get, server } from './common/network';
-import Game from './app/screens/GameScreen';
+import GameScreen from './app/screens/GameScreen';
 
 const cookie = getCookie();
 
@@ -17,17 +17,20 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      screen: LoadingScreen,
+      screen: GameScreen,
       username: cookie.username,
+      table: [],
     };
 
-    this.interface = {}; // maybe not necessary here.
+    this.interface = {};
 
-    server('index').then(({ inGame, id }) => {
-      const screen = inGame ? Game : Splash;
-      this.setState({ screen });
-
-      if (id) setCookie({ id });
+    server('index').then((game) => {
+      const inGame = game !== undefined;
+      if (inGame) {
+        this.setState({ table: game.board.table, screen: GameScreen });
+      } else {
+        this.setState({ screen: Splash });
+      }
     });
   }
 
@@ -43,6 +46,12 @@ export default class App extends Component {
       this.state.screen,
       (screen) => {
         this.setState({ screen });
+      },
+    ];
+    this.interface.tableHook = [
+      this.state.table,
+      (table) => {
+        this.setState({ table });
       },
     ];
 

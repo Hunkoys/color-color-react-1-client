@@ -15,4 +15,3 @@ export default function Game(assumed) {
 }
 
 const game = Game({});
-console.log(game.board);

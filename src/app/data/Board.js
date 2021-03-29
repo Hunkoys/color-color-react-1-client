@@ -3,7 +3,7 @@ import Size from './Size';
 
 export default function Board(assumed) {
   const schema = {
-    colorArray: array,
+    table: array,
     size: Size(),
   };
 

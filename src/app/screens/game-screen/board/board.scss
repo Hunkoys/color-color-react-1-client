@@ -1,0 +1,59 @@
+$size: 25px;
+
+$color0: #fefe33;
+$color1: #66b032;
+$color2: #0247fe;
+$color3: #8601af;
+$color4: #fe2712;
+$color5: #fb9902;
+$color6: #f6f6f6;
+$color7: #333333;
+$color8: #502a11;
+
+.board {
+  &.row {
+    height: $size;
+  }
+
+  &.Square {
+    display: inline-block;
+    height: $size;
+    width: $size;
+  }
+
+  &.color0 {
+    background: $color0;
+  }
+
+  &.color1 {
+    background: $color1;
+  }
+
+  &.color2 {
+    background: $color2;
+  }
+
+  &.color3 {
+    background: $color3;
+  }
+
+  &.color4 {
+    background: $color4;
+  }
+
+  &.color5 {
+    background: $color5;
+  }
+
+  &.color6 {
+    background: $color6;
+  }
+
+  &.color7 {
+    background: $color7;
+  }
+
+  &.color8 {
+    background: $color8;
+  }
+}

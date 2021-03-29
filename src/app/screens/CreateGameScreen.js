@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { getCookie } from '../../common/functions';
 import Screen from '../components/Screen';
 import Title from '../components/Title';
 import Card from '../components/Card';
@@ -10,32 +9,36 @@ import AppContext from '../../AppContext';
 import Spacer from '../../generic-components/Spacer';
 import { server } from '../../common/network';
 import GameScreen from './GameScreen';
-import Game from '../data/Game';
 import Size from '../data/Size';
 import LoadingScreen from './LoadingScreen';
-
-function createGame(username, boardSize) {
-  const cookie = getCookie();
-  const game = Game({});
-  game.host.username = cookie.username;
-  game.host.playerId = cookie.playerId;
-  game.board.size = boardSize;
-  return server('create game', game);
-}
+import Game from '../data/Game';
+import ReturnToGameScreen from './ReturnToGameScreen';
 
 class CreateBoardButton extends Component {
   render() {
-    const size = this.props.size;
     return (
       <AppContext.Consumer>
         {(app) => {
-          const [username] = app.usernameHook;
+          const size = this.props.size;
           const [screen, setScreen] = app.screenHook;
+          const [table, setTable] = app.tableHook;
           return (
             <Button
               type="block"
               action={() => {
-                createGame(username, size).then(() => setScreen(GameScreen));
+                const config = { board: { size, nColors: 8 } };
+                server('create-game', config).then((response) => {
+                  console.log(response);
+                  if (response === undefined) {
+                    setScreen(ReturnToGameScreen);
+                  } else {
+                    const game = Game(response);
+
+                    setTable(response.board.table);
+                    setScreen(GameScreen);
+                  }
+                });
+
                 setScreen(LoadingScreen);
               }}
             >{`${size.w} x ${size.h}`}</Button>
