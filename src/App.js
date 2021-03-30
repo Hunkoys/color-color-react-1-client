@@ -10,6 +10,7 @@ import JoinGameScreen from './app/screens/JoinGameScreen';
 import LoadingScreen from './app/screens/LoadingScreen';
 import { get, server } from './common/network';
 import GameScreen from './app/screens/GameScreen';
+import Game from './app/data/Game';
 
 const cookie = getCookie();
 
@@ -17,9 +18,9 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      screen: GameScreen,
+      screen: LoadingScreen,
       username: cookie.username,
-      table: [],
+      game: {},
     };
 
     this.interface = {};
@@ -27,7 +28,7 @@ export default class App extends Component {
     server('index').then((game) => {
       const inGame = game !== undefined;
       if (inGame) {
-        this.setState({ table: game.board.table, screen: GameScreen });
+        this.setState({ game, screen: GameScreen });
       } else {
         this.setState({ screen: Splash });
       }
@@ -48,10 +49,10 @@ export default class App extends Component {
         this.setState({ screen });
       },
     ];
-    this.interface.tableHook = [
-      this.state.table,
-      (table) => {
-        this.setState({ table });
+    this.interface.gameHook = [
+      this.state.game,
+      (game) => {
+        this.setState({ game });
       },
     ];
 

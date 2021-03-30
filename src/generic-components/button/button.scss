@@ -90,3 +90,7 @@
 .Button.med {
   @include Button-size($button-med);
 }
+
+.Button.sml {
+  @include Button-size($button-sml);
+}

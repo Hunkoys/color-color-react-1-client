@@ -21,7 +21,7 @@ class CreateBoardButton extends Component {
         {(app) => {
           const size = this.props.size;
           const [screen, setScreen] = app.screenHook;
-          const [table, setTable] = app.tableHook;
+          const [game, setGame] = app.gameHook;
           return (
             <Button
               type="block"
@@ -29,13 +29,13 @@ class CreateBoardButton extends Component {
                 const config = { board: { size, nColors: 8 } };
                 server('create-game', config).then((response) => {
                   console.log(response);
-                  if (response === undefined) {
-                    setScreen(ReturnToGameScreen);
-                  } else {
+                  if (response) {
                     const game = Game(response);
 
-                    setTable(response.board.table);
+                    setGame(game);
                     setScreen(GameScreen);
+                  } else {
+                    setScreen(ReturnToGameScreen);
                   }
                 });
 
