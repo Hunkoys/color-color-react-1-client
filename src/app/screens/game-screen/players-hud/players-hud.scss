@@ -1,0 +1,62 @@
+$face-size: 70px;
+$score-size: 35px;
+$lower-block-gutter: 10px;
+
+.PlayersHud {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  .PlayerBox {
+    display: flex;
+    flex-direction: column;
+
+    .Text {
+      font-size: 1.4em;
+      text-shadow: 2px 2px $shadow-color;
+    }
+
+    .lower-block {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: $face-size + $score-size + $lower-block-gutter;
+    }
+
+    &.right {
+      align-items: flex-end;
+      .lower-block {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+
+  // For exteranl
+
+  .Face {
+    width: $face-size;
+
+    height: $face-size;
+    font-size: 26px;
+    text-align: center;
+    line-height: $face-size;
+
+    transform: scale(2.3);
+  }
+
+  .Score {
+    width: $score-size;
+    height: $score-size;
+    padding-top: 6px;
+    border: 3px solid #222;
+    border-radius: $score-size / 4;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0px 0px 3px $shadow-color;
+
+    &.color-0,
+    &.color-6 {
+      color: #222222;
+    }
+  }
+}

@@ -106,3 +106,23 @@ body {
     height: $space-lrg;
   }
 }
+
+// #4ae2e2,
+
+$colors: (
+  0: #f7f711,
+  1: #85d84b,
+  2: #0247fe,
+  3: #b218e0,
+  4: #fe2712,
+  5: #fab245,
+  6: #fefefe,
+  7: #333333,
+  8: #502a11,
+);
+
+@each $i, $color in $colors {
+  .color-#{$i} {
+    background: $color;
+  }
+}

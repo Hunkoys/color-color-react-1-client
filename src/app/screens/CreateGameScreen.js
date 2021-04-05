@@ -21,25 +21,23 @@ class CreateBoardButton extends Component {
         {(app) => {
           const size = this.props.size;
           const [screen, setScreen] = app.screenHook;
-          const [game, setGame] = app.gameHook;
           return (
             <Button
               type="block"
               action={() => {
                 const config = { board: { size, nColors: 8 } };
                 server('create-game', config).then((response) => {
-                  console.log(response);
                   if (response) {
                     const game = Game(response);
+                    console.log(game);
 
-                    setGame(game);
-                    setScreen(GameScreen);
+                    setScreen(<GameScreen game={game} />);
                   } else {
-                    setScreen(ReturnToGameScreen);
+                    setScreen(<ReturnToGameScreen />);
                   }
                 });
 
-                setScreen(LoadingScreen);
+                setScreen(<LoadingScreen />);
               }}
             >{`${size.w} x ${size.h}`}</Button>
           );
@@ -67,7 +65,7 @@ export default class CreateGameScreen extends Component {
     return (
       <AppContext.Consumer>
         {(app) => {
-          const [screen, goto] = app.screenHook;
+          const [screen, setScreen] = app.screenHook;
 
           return (
             <Screen name="CreateBoard">
@@ -79,7 +77,7 @@ export default class CreateGameScreen extends Component {
                 <Spacer type="h-gutter" />
                 <CreateBoardButton size={large} />
                 <Spacer type="back-button-space" />
-                <Button type="block" action={() => goto(Splash)}>
+                <Button type="block" action={() => setScreen(<Splash />)}>
                   HOME
                 </Button>
               </Card>

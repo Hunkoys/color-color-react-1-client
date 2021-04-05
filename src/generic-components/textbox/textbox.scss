@@ -18,6 +18,6 @@
   > input:focus {
     appearance: none;
     border: 4px solid $focus-color;
-    box-shadow: 0 0 2px 2px $focus-color;
+    box-shadow: $highlight-shadow;
   }
 }

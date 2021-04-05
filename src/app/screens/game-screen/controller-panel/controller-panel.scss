@@ -1,0 +1,15 @@
+@import 'color-selector/color-button/color-button';
+
+.ControllerPanel {
+  width: 100%;
+
+  .ColorSelector {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &.my-turn {
+    box-shadow: $highlight-shadow;
+  }
+}

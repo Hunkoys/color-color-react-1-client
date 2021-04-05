@@ -72,7 +72,7 @@ export default class JoinGameScreen extends Component {
     return (
       <AppContext.Consumer>
         {(app) => {
-          const [screen, goto] = app.screenHook;
+          const [screen, setScreen] = app.screenHook;
           return (
             <Screen name="OpenGames">
               <Card>
@@ -98,15 +98,15 @@ export default class JoinGameScreen extends Component {
                     type="block call-to-action"
                     disabled={somethingSelected === false}
                     action={() => {
-                      goto(LoadingScreen);
-                      post('api/join-game', this.state.selectedOpenGameId).then(() => goto(GameScreen));
+                      setScreen(<LoadingScreen />);
+                      post('api/join-game', this.state.selectedOpenGameId).then(() => setScreen(<GameScreen />));
                     }}
                   >
                     JOIN
                   </Button>
                 </Box>
                 <Spacer type="back-button-space" />
-                <Button type="block" action={() => goto(Splash)}>
+                <Button type="block" action={() => setScreen(<Splash />)}>
                   HOME
                 </Button>
               </Card>

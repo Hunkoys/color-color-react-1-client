@@ -18,19 +18,18 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      screen: LoadingScreen,
+      screen: <LoadingScreen />,
       username: cookie.username,
-      game: {},
     };
 
     this.interface = {};
 
-    server('index').then((game) => {
+    server('index', { board: { size: { w: 11, h: 11 }, nColors: 8 } }).then((game) => {
       const inGame = game !== undefined;
       if (inGame) {
-        this.setState({ game, screen: GameScreen });
+        this.setState({ screen: <GameScreen game={Game(game)} /> });
       } else {
-        this.setState({ screen: Splash });
+        this.setState({ screen: <Splash /> });
       }
     });
   }
@@ -56,10 +55,6 @@ export default class App extends Component {
       },
     ];
 
-    return (
-      <AppContext.Provider value={this.interface}>
-        <this.state.screen />
-      </AppContext.Provider>
-    );
+    return <AppContext.Provider value={this.interface}>{this.state.screen}</AppContext.Provider>;
   }
 }

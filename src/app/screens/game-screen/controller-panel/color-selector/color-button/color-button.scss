@@ -1,0 +1,22 @@
+$disabled-size: 10px;
+
+.ColorButton {
+  width: $button-sml;
+  height: $button-sml;
+  border: 3px solid $shadow-color;
+  border-radius: $disabled-size / 2;
+
+  box-shadow: $shadow;
+
+  transition: height 300ms ease-in-out;
+
+  &.disabled {
+    // width: $disabled-size;
+    height: $disabled-size;
+    border-radius: $disabled-size / 2;
+  }
+
+  &.selected {
+    border: 2px solid $highlight-color;
+  }
+}

@@ -17,7 +17,9 @@ $highlight-color-shade: #01a5d6;
 
 $focus-color: $highlight-color;
 
-$shadow: #64646f33 0px 3px 10px 0px;
+$shadow-color: #64646f33;
+$shadow: $shadow-color 0px 3px 10px 0px;
+$highlight-shadow: 0 0 2px 2px $focus-color;
 
 $text-color-light: #fbede8;
 $text-color-dark: #111111;
@@ -50,3 +52,13 @@ $h-gutter: $gutter;
 $v-gutter: $gutter;
 
 $space-lrg: 36px;
+
+$color-0: #fefe33;
+$color-1: #66b032;
+$color-2: #0247fe;
+$color-3: #8601af;
+$color-4: #fe2712;
+$color-5: #fb9902;
+$color-6: #f6f6f6;
+$color-7: #333333;
+$color-8: #502a11;

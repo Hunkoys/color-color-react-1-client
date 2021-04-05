@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import { appendClassName } from '../../../../common/functions';
-import Clickable from '../../../../generic-components/Clickable';
+import { appendClassName } from '../../../../../common/functions';
+import Clickable from '../../../../../generic-components/Clickable';
 
 export default class ColorButton extends Component {
   render() {
@@ -11,3 +11,6 @@ export default class ColorButton extends Component {
     );
   }
 }
+
+// Remove:
+//    action = this.props.action || (() => { });

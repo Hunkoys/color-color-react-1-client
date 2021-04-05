@@ -14,7 +14,7 @@ class ListItem extends Component {
         onClick={() => this.props.onPress(children)}
       >
         {<children.type {...children.props} type={appendClassName(selected)} />}
-      </li>
+      </li> // type={appendClassName()} is a sketch. Keep eye on it
     );
   }
 

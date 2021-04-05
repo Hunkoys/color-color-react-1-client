@@ -8,6 +8,7 @@ export default function Game(assumed) {
     host: Player(),
     challenger: Player(),
     board: Board(),
+    turn: Player(),
   };
 
   process(schema, assumed);
