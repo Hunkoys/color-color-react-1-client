@@ -1,7 +1,9 @@
 import { Component } from 'react';
 import { io } from 'socket.io-client';
 import AppContext from '../../AppContext';
+import { faces } from '../../common/classes';
 import { getCookie } from '../../common/functions';
+import { server } from '../../common/network';
 import Button from '../../generic-components/Button';
 import Spacer from '../../generic-components/Spacer';
 import Card from '../components/Card';
@@ -9,6 +11,8 @@ import Screen from '../components/Screen';
 import Board from './game-screen/Board';
 import ControllerPanel, { action } from './game-screen/ControllerPanel';
 import PlayersHud from './game-screen/PlayersHud';
+import LoadingScreen from './LoadingScreen';
+import Splash from './Splash';
 
 const me = getCookie();
 
@@ -25,7 +29,7 @@ export default class GameScreen extends Component {
         ...this.props.game.challenger,
         id: 123,
         username: 'nicko',
-        face: '🤣',
+        faceName: 'devil',
         score: 31,
       },
     };
@@ -43,19 +47,29 @@ export default class GameScreen extends Component {
 
   render() {
     const game = this.state;
-    game.host = {
-      ...game.host,
-      ...{
-        score: 30,
-        face: '😂',
-      },
-    };
+
     return (
       <AppContext.Consumer>
         {(app) => {
+          const [screen, setScreen] = app.screenHook;
+          game.host = {
+            ...game.host,
+            ...{
+              score: 30,
+            },
+          };
+          const quitGame = () => {
+            server('quit-game').then((success) => {
+              if (success) setScreen(<Splash />);
+            });
+            setScreen(<LoadingScreen />);
+          };
           return (
             <Screen name="GameScreen">
               <Card>
+                <Button type="block" action={quitGame}>
+                  Quit
+                </Button>
                 <PlayersHud left={game.host} right={game.challenger} />
                 <Spacer type="h-gutter" />
                 <Spacer type="h-gutter" />

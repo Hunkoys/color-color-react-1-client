@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { getCookie, setCookie } from './common/functions';
+import { deleteCookie, getCookie, setCookie } from './common/functions';
 import Splash from './app/screens/Splash';
 import AppContext from './AppContext';
 
@@ -11,6 +11,7 @@ import LoadingScreen from './app/screens/LoadingScreen';
 import { get, server } from './common/network';
 import GameScreen from './app/screens/GameScreen';
 import Game from './app/data/Game';
+import { faces } from './common/classes';
 
 const cookie = getCookie();
 
@@ -20,11 +21,12 @@ export default class App extends Component {
     this.state = {
       screen: <LoadingScreen />,
       username: cookie.username,
+      faceName: cookie.faceName || Object.keys(faces)[0],
     };
 
     this.interface = {};
 
-    server('index', { board: { size: { w: 11, h: 11 }, nColors: 8 } }).then((game) => {
+    server('index').then((game) => {
       const inGame = game !== undefined;
       if (inGame) {
         this.setState({ screen: <GameScreen game={Game(game)} /> });
@@ -40,6 +42,13 @@ export default class App extends Component {
       (username) => {
         setCookie({ username });
         this.setState({ username });
+      },
+    ];
+    this.interface.faceHook = [
+      this.state.faceName,
+      (faceName) => {
+        setCookie({ faceName });
+        this.setState({ faceName });
       },
     ];
     this.interface.screenHook = [

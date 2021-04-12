@@ -1,0 +1,30 @@
+$size: $button-lrg + 10;
+
+.GridSelector {
+  .ShowBox {
+    width: $size;
+    height: $size;
+    font-size: 26px;
+    text-align: center;
+    transform: scale(1.5) translateY(15px);
+  }
+
+  .grid {
+    position: absolute;
+    z-index: 1;
+    background: $substance-color;
+    padding: $padding-med;
+    border-radius: $padding-med;
+    box-shadow: $shadow;
+
+    .GridRow {
+      display: flex;
+    }
+
+    .GridItem {
+      width: $button-med;
+      height: $button-med;
+      font-size: 26px;
+    }
+  }
+}

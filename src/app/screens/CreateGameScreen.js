@@ -29,7 +29,6 @@ class CreateBoardButton extends Component {
                 server('create-game', config).then((response) => {
                   if (response) {
                     const game = Game(response);
-                    console.log(game);
 
                     setScreen(<GameScreen game={game} />);
                   } else {

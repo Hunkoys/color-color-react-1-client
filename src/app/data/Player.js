@@ -4,7 +4,7 @@ export default function Player(assumed) {
   const schema = {
     id: number,
     username: string,
-    face: string,
+    faceName: string,
     color: number,
     score: number,
   };

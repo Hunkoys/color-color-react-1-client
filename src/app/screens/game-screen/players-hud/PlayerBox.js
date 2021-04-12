@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { faces } from '../../../../common/classes';
 import { appendClassName } from '../../../../common/functions';
 import Spacer from '../../../../generic-components/Spacer';
 import Text from '../../../components/Text';
@@ -14,12 +15,16 @@ export default class PlayerBox extends Component {
         username: '-',
       }),
     } = this.props;
+
+    console.log(player);
+
+    const faceName = player.faceName;
     return (
       <section className={PlayerBox.name + appendClassName(pos)}>
         <Text type="username">{player.username}</Text>
         <Spacer type="h-gutter" />
         <section className="lower-block">
-          <Face value={player.face} />
+          <Face value={faces[faceName]} />
           <Score value={player.score} color={player.color} />
         </section>
       </section>

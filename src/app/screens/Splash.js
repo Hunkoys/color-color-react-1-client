@@ -9,6 +9,10 @@ import JoinGameScreen from './JoinGameScreen';
 
 import AppContext from '../../AppContext';
 import Spacer from '../../generic-components/Spacer';
+import GridSelector from '../components/GridSelector';
+import { faces } from '../../common/classes';
+import Container from '../../generic-components/Container';
+
 export default class Splash extends Component {
   constructor(props) {
     super(props);
@@ -24,13 +28,19 @@ export default class Splash extends Component {
               <Card>
                 <Title type="game-title">Color Color</Title>
                 <Spacer type="h-gutter" />
-                <TextBox hook={app.usernameHook} placeholder=" Your Name" spellCheck="false" />
+                <Container type="player-info">
+                  <GridSelector hook={app.faceHook} rowSize={5}>
+                    {faces}
+                  </GridSelector>
+                  <Spacer type="v-gutter" />
+                  <TextBox hook={app.usernameHook} placeholder=" Your Name" spellCheck="false" />
+                </Container>
                 <Spacer type="h-gutter" />
-                <Button type="block" action={() => goto(CreateGameScreen)}>
+                <Button type="block" action={() => goto(<CreateGameScreen />)}>
                   NEW GAME
                 </Button>
                 <Spacer type="h-gutter" />
-                <Button type="block" action={() => goto(JoinGameScreen)}>
+                <Button type="block" action={() => goto(<JoinGameScreen />)}>
                   JOIN GAME
                 </Button>
               </Card>

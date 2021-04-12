@@ -8,3 +8,21 @@ export class Accessor {
     };
   }
 }
+
+export const faces = {
+  smile: '😀',
+  sad: '😞',
+  happy: '😊',
+  mad: '😡',
+  monkey: '🙉',
+  teary: '🥺',
+  vomit: '🤮',
+  cry: '😭',
+  cocky: '🤨',
+  devil: '😈',
+  crazy: '🤪',
+  poop: '💩',
+  confused: '😵',
+  shades: '😎',
+  nerd: '🤓',
+};
