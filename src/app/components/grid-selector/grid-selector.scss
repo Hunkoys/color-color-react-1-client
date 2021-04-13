@@ -22,8 +22,7 @@ $size: $button-lrg + 10;
     }
 
     .GridItem {
-      width: $button-med;
-      height: $button-med;
+      padding: $padding-med;
       font-size: 26px;
     }
   }

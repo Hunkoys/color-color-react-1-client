@@ -39,7 +39,7 @@ export default class GridSelector extends Component {
     super(props);
     const { children = [], hook, defaultValue = 0 } = props;
     const firstFaceName = Object.entries(children)[defaultValue][0];
-    const [faceName = firstFaceName] = hook;
+    const faceName = hook ? hook[0] : firstFaceName;
     this.state = {
       selectorOpen: false,
       faceName,
@@ -48,10 +48,11 @@ export default class GridSelector extends Component {
 
   onClickItem = (item) => {
     console.log('clicked', item.value);
-    const { hook = [] } = this.props;
-    const [face, setFace = () => {}] = hook;
-    this.setState({ selectorOpen: false, item });
-    setFace(item);
+    const [faceName] = item;
+    const { hook } = this.props;
+    const setFaceName = hook ? hook[1] : () => {};
+    this.setState({ selectorOpen: false, faceName });
+    setFaceName(faceName);
   };
 
   showBoxClick = () => {
@@ -82,7 +83,7 @@ export default class GridSelector extends Component {
       row = [];
     }
 
-    const [value] = faces[this.state.faceName]; // if cookie is empty, this breaks
+    const value = faces[this.state.faceName]; // if cookie is empty, this breaks
 
     return (
       <article className={GridSelector.name + appendClassName(this.props.type)}>
