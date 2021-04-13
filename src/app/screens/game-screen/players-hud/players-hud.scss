@@ -1,5 +1,6 @@
 $face-size: 70px;
 $score-size: 35px;
+$font-size: 1.4em;
 $lower-block-gutter: 10px;
 
 .PlayersHud {
@@ -12,7 +13,8 @@ $lower-block-gutter: 10px;
     flex-direction: column;
 
     .Text {
-      font-size: 1.4em;
+      height: $font-size;
+      font-size: $font-size;
       text-shadow: 2px 2px $shadow-color;
     }
 

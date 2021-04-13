@@ -14,6 +14,7 @@ import Game from './app/data/Game';
 import { faces } from './common/classes';
 
 const cookie = getCookie();
+if (cookie.faceName === undefined) setCookie({ faceName: Object.keys(faces)[0] });
 
 export default class App extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class App extends Component {
     this.state = {
       screen: <LoadingScreen />,
       username: cookie.username,
-      faceName: cookie.faceName || Object.keys(faces)[0],
+      faceName: cookie.faceName,
     };
 
     this.interface = {};
