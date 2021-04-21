@@ -8,8 +8,8 @@ export default class PlayersHud extends Component {
     console.log(left);
     return (
       <section className={PlayersHud.name}>
-        <PlayerBox pos="left" player={left} />
-        <PlayerBox pos="right" player={right} />
+        <PlayerBox pos="left" player={left} highlight={this.props.turn === 'left'} />
+        <PlayerBox pos="right" player={right} highlight={this.props.turn === 'right'} />
       </section>
     );
   }

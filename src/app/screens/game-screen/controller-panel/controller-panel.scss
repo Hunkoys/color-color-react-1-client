@@ -7,9 +7,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .ColorButton {
+      cursor: default;
+    }
   }
 
   &.my-turn {
     box-shadow: $highlight-shadow;
+
+    .ColorButton {
+      cursor: pointer;
+
+      &.disabled {
+        cursor: not-allowed;
+      }
+    }
   }
 }

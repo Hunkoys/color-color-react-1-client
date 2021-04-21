@@ -1,3 +1,5 @@
+import { io } from 'socket.io-client';
+import { getCookie } from './functions';
 import { pack, unpack } from './network/packer';
 
 export const get = async (path, options) => {
@@ -29,3 +31,14 @@ export const server = async (command, data) => {
 
   return unpack(packet);
 };
+
+const URL = 'http://localhost:2500';
+export const socket = io(URL, { autoConnect: false });
+
+socket.onAny((event, ...args) => {
+  console.log('Socket:', `"${event}"`, ...args);
+});
+
+socket.on('whats your id', () => {
+  socket.emit('give id', getCookie().id);
+});

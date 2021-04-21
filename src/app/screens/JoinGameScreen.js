@@ -10,7 +10,7 @@ import ListPit from '../components/ListPit';
 import OpenGamesListItem from '../components/OpenGamesListItem';
 
 import AppContext from '../../AppContext';
-import { get, post } from '../../common/network';
+import { get, post, server } from '../../common/network';
 import Game from '../data/Game';
 import LoadingScreen from './LoadingScreen';
 import GameScreen from './GameScreen';
@@ -34,7 +34,7 @@ export default class JoinGameScreen extends Component {
       openGames: [],
       listPlaceholder: <Title>...</Title>,
     });
-    get('api/open-games')
+    server('get-open-games')
       .then((openGames) => {
         if (this.validateList(openGames)) {
           this.setState({ openGames });
@@ -49,6 +49,10 @@ export default class JoinGameScreen extends Component {
   }
 
   validateList(openGames) {
+    return true;
+  }
+
+  validateListOld(openGames) {
     let dataIsGood = true;
     if (openGames === undefined) dataIsGood = false;
     else {
@@ -99,7 +103,11 @@ export default class JoinGameScreen extends Component {
                     disabled={somethingSelected === false}
                     action={() => {
                       setScreen(<LoadingScreen />);
-                      post('api/join-game', this.state.selectedOpenGameId).then(() => setScreen(<GameScreen />));
+                      server('join-game', this.state.selectedOpenGameId).then((response) => {
+                        console.log(response);
+                        const game = Game(response);
+                        setScreen(<GameScreen game={game} />);
+                      });
                     }}
                   >
                     JOIN

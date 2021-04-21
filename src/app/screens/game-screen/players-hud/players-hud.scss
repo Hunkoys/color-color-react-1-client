@@ -31,6 +31,12 @@ $lower-block-gutter: 10px;
         flex-direction: row-reverse;
       }
     }
+
+    &.highlight {
+      .Face {
+        text-shadow: 0 0 10px $highlight-color;
+      }
+    }
   }
 
   // For exteranl

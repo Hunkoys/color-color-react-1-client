@@ -14,6 +14,7 @@ $disabled-size: 10px;
     // width: $disabled-size;
     height: $disabled-size;
     border-radius: $disabled-size / 2;
+    cursor: not-allowed;
   }
 
   &.selected {
