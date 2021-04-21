@@ -8,6 +8,7 @@ import Button from '../../generic-components/Button';
 import Spacer from '../../generic-components/Spacer';
 import Card from '../components/Card';
 import Screen from '../components/Screen';
+import Game from '../data/Game';
 import Player from '../data/Player';
 import Board from './game-screen/Board';
 import ControllerPanel, { action } from './game-screen/ControllerPanel';
@@ -32,6 +33,12 @@ export default class GameScreen extends Component {
       const [player, type, data] = unpack(move);
 
       this.act(Player(player), action[type], data);
+    });
+    socket.on('player-joined', (data) => {
+      const game = Game(data);
+      if (this.props.game.challenger.id === undefined) {
+        this.setState({ challenger: game.challenger });
+      }
     });
   }
 
