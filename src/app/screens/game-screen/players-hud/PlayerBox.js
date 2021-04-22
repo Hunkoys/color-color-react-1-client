@@ -16,8 +16,6 @@ export default class PlayerBox extends Component {
       }),
     } = this.props;
 
-    console.log(player);
-
     const faceName = player.faceName;
     return (
       <section className={PlayerBox.name + appendClassName(pos) + appendClassName(this.props.highlight && 'highlight')}>

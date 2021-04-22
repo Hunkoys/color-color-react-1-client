@@ -29,11 +29,6 @@ export default class GameScreen extends Component {
     this.state = this.props.game;
 
     socket.connect();
-    socket.on('move', (move) => {
-      const [player, type, data] = unpack(move);
-
-      this.act(Player(player), action[type], data);
-    });
     socket.on('player-joined', (data) => {
       const game = Game(data);
       if (this.props.game.challenger.id === undefined) {
@@ -44,13 +39,11 @@ export default class GameScreen extends Component {
 
   act = (player, type, data) => {
     console.log('hi', player, type.toString(), data);
-    if (type === action.confirm) {
+    if (type === 'confirm') {
       this.setState((game) => {
         const turn = (game.turn && game.turn.id) === (game.host && game.host.id) ? game.challenger : game.host;
         return { turn };
       });
-
-      if (is(player, me)) socket.emit('move', pack([player, type.toString(), data]));
     }
   };
 
@@ -61,12 +54,7 @@ export default class GameScreen extends Component {
       <AppContext.Consumer>
         {(app) => {
           const [screen, setScreen] = app.screenHook;
-          game.host = {
-            ...game.host,
-            ...{
-              score: 30,
-            },
-          };
+
           const quitGame = () => {
             server('quit-game').then((success) => {
               if (success) setScreen(<Splash />);
