@@ -2,6 +2,7 @@ $disabled-size: 10px;
 
 .ColorButton {
   position: relative;
+  top: 0;
   width: $button-sml;
   height: $button-sml;
   border: 3px solid $shadow-color;
@@ -9,7 +10,7 @@ $disabled-size: 10px;
 
   box-shadow: $shadow;
 
-  transition: height 300ms ease-in-out;
+  transition: all 200ms ease-in-out;
 
   &.disabled {
     // width: $disabled-size;
@@ -21,6 +22,6 @@ $disabled-size: 10px;
   &.selected {
     top: -5px;
     // border: 3px solid rgba(95, 95, 95, 0.527);
-    box-shadow: $shadow, 0 5px rgb(189, 189, 189);
+    //box-shadow: $shadow, 0 5px rgb(189, 189, 189);
   }
 }
