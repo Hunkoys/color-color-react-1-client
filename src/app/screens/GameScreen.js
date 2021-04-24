@@ -38,7 +38,6 @@ export default class GameScreen extends Component {
   }
 
   act = (player, type, data) => {
-    console.log('hi', player, type.toString(), data);
     if (type === 'confirm') {
       this.setState((game) => {
         const turn = (game.turn && game.turn.id) === (game.host && game.host.id) ? game.challenger : game.host;
