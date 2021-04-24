@@ -1,6 +1,7 @@
 $disabled-size: 10px;
 
 .ColorButton {
+  position: relative;
   width: $button-sml;
   height: $button-sml;
   border: 3px solid $shadow-color;
@@ -18,6 +19,8 @@ $disabled-size: 10px;
   }
 
   &.selected {
-    border: 2px solid $highlight-color;
+    top: -5px;
+    // border: 3px solid rgba(95, 95, 95, 0.527);
+    box-shadow: $shadow, 0 5px rgb(189, 189, 189);
   }
 }
