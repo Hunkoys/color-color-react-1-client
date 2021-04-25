@@ -10,8 +10,9 @@ import Card from '../components/Card';
 import Screen from '../components/Screen';
 import Game from '../data/Game';
 import Player from '../data/Player';
+import logic from '../game/logic';
 import Board from './game-screen/Board';
-import ControllerPanel, { action } from './game-screen/ControllerPanel';
+import ControllerPanel, { CONFIRM, SELECT } from './game-screen/ControllerPanel';
 import PlayersHud from './game-screen/PlayersHud';
 import LoadingScreen from './LoadingScreen';
 import Splash from './Splash';
@@ -32,16 +33,17 @@ export default class GameScreen extends Component {
     socket.on('player-joined', (data) => {
       const game = Game(data);
       if (this.props.game.challenger.id === undefined) {
-        this.setState({ challenger: game.challenger });
+        this.setState(game);
       }
     });
   }
 
-  act = (player, type, data) => {
-    if (type === 'confirm') {
+  act = (player, action, data) => {
+    if (action === CONFIRM) {
       this.setState((game) => {
-        const turn = (game.turn && game.turn.id) === (game.host && game.host.id) ? game.challenger : game.host;
-        return { turn };
+        const board = logic.consume(player, game.board, 1);
+        const turn = logic.switchTurn(game);
+        return { board, turn };
       });
     }
   };

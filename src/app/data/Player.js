@@ -1,4 +1,5 @@
 import process, { number, string } from '../../common/schema';
+import Squares from './Squares';
 
 export default function Player(assumed) {
   const schema = {
@@ -7,6 +8,7 @@ export default function Player(assumed) {
     faceName: string,
     color: number,
     score: number,
+    squares: Squares(),
   };
 
   process(schema, assumed);

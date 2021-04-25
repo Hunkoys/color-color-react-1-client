@@ -1,6 +1,6 @@
 import Board from '../data/Board';
 
-export class Logic {
+class BoardManager {
   constructor(board) {
     this.board = Board(board);
   }
@@ -21,22 +21,32 @@ export class Logic {
     const [xSquare, ySquare] = square;
     const xAbs = xSquare + x;
     const yAbs = ySquare + y;
-    return getAbsoluteSquare(xAbs, yAbs);
+    return this.getAbsoluteSquare(xAbs, yAbs);
   }
 
   top(square) {
-    return getRelativeSquare(square, 0, -1);
+    return this.getRelativeSquare(square, 0, -1);
   }
 
   bottom(square) {
-    return getRelativeSquare(square, 0, 1);
+    return this.getRelativeSquare(square, 0, 1);
   }
 
   left(square) {
-    return getRelativeSquare(square, -1, 0);
+    return this.getRelativeSquare(square, -1, 0);
   }
 
   right(square) {
-    return getRelativeSquare(square, 1, 0);
+    return this.getRelativeSquare(square, 1, 0);
   }
 }
+
+export default {
+  switchTurn(game) {
+    return (game.turn && game.turn.id) === (game.host && game.host.id) ? game.challenger : game.host;
+  },
+
+  consume(player, board, range) {
+    return board;
+  },
+};

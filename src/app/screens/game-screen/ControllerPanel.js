@@ -5,17 +5,8 @@ import { pack, unpack } from '../../../common/network/packer';
 import Player from '../../data/Player';
 import ColorSelector from './controller-panel/ColorSelector';
 
-export const action = {
-  select: {
-    toString: () => 'select',
-  },
-  confirm: {
-    toString: () => 'confirm',
-  },
-};
-
-const SELECT = 'select';
-const CONFIRM = 'confirm';
+export const SELECT = 'select';
+export const CONFIRM = 'confirm';
 
 const me = Player(getCookie());
 export default class ControllerPanel extends Component {
@@ -28,6 +19,7 @@ export default class ControllerPanel extends Component {
     //    socket.connect()
 
     socket.on('move', (move) => {
+      console.log('yo, its me');
       const [playerRaw, action, data] = unpack(move);
       const player = Player(playerRaw);
 

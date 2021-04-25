@@ -4,7 +4,6 @@ export default function Squares(assumed) {
   const schema = {
     all: array,
     edges: array,
-    color: number,
   };
 
   process(schema, assumed);
