@@ -32,6 +32,7 @@ export const server = async (command, data) => {
   return unpack(packet);
 };
 
+// const URL = 'http://dominicvictoria.com';
 const URL = 'http://localhost:2500';
 export const socket = io(URL, { autoConnect: false });
 

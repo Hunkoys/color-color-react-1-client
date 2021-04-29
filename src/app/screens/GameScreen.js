@@ -162,6 +162,7 @@ export default class GameScreen extends Component {
           const [screen, setScreen] = app.screenHook;
 
           const quitGame = () => {
+            socket.disconnect();
             server('quit-game').then((success) => {
               if (success) setScreen(<Splash />);
             });
