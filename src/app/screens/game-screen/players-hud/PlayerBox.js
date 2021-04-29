@@ -18,7 +18,7 @@ export default class PlayerBox extends Component {
 
     const faceName = player.faceName;
     return (
-      <section className={PlayerBox.name + appendClassName(pos) + appendClassName(this.props.highlight && 'highlight')}>
+      <section className={'PlayerBox' + appendClassName(pos) + appendClassName(this.props.highlight && 'highlight')}>
         <Text type="username">{player.username}</Text>
         <Spacer type="h-gutter" />
         <section className="lower-block">

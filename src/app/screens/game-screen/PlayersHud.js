@@ -6,7 +6,7 @@ export default class PlayersHud extends Component {
   render() {
     const { left, right } = this.props;
     return (
-      <section className={PlayersHud.name}>
+      <section className={'PlayersHud'}>
         <PlayerBox pos="left" player={left} highlight={this.props.turn === 'left'} />
         <PlayerBox pos="right" player={right} highlight={this.props.turn === 'right'} />
       </section>

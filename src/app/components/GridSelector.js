@@ -4,7 +4,7 @@ import { appendClassName } from '../../common/functions';
 
 class GridRow extends Component {
   render() {
-    return <section className={GridRow.name + appendClassName(this.props.type)}>{this.props.children}</section>;
+    return <section className={'GridRow' + appendClassName(this.props.type)}>{this.props.children}</section>;
   }
 }
 
@@ -12,7 +12,7 @@ class GridItem extends Component {
   render() {
     return (
       <section
-        className={GridItem.name + appendClassName(this.props.type)}
+        className={'GridItem' + appendClassName(this.props.type)}
         onClick={() => {
           this.props.onClick([this.props.code, this.props.children]);
         }}
@@ -27,7 +27,7 @@ class ShowBox extends Component {
   render() {
     const { onClick = () => {} } = this.props;
     return (
-      <section className={ShowBox.name + appendClassName(this.props.type)} onClick={onClick}>
+      <section className={'ShowBox' + appendClassName(this.props.type)} onClick={onClick}>
         {this.props.children}
       </section>
     );
@@ -86,7 +86,7 @@ export default class GridSelector extends Component {
     const value = faces[this.state.faceName]; // if cookie is empty, this breaks
 
     return (
-      <article className={GridSelector.name + appendClassName(this.props.type)}>
+      <article className={'GridSelector' + appendClassName(this.props.type)}>
         <ShowBox onClick={this.showBoxClick}>{value}</ShowBox>
         {this.state.selectorOpen ? <section className="grid">{grid}</section> : null}
       </article>

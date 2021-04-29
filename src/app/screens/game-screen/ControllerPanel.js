@@ -66,7 +66,7 @@ export default class ControllerPanel extends Component {
     const disabledColors = [game.host && game.host.color, game.challenger && game.challenger.color];
 
     return (
-      <section className={ControllerPanel.name + appendClassName(callToAction)}>
+      <section className={'ControllerPanel' + appendClassName(callToAction)}>
         <ColorSelector
           nColors={game.board.nColors}
           onChange={this.change}

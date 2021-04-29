@@ -53,6 +53,6 @@ export default class ColorSelector extends Component {
 
   render() {
     const buttonArray = this.createButtonArray();
-    return <section className={ColorSelector.name + appendClassName(this.props.type)}>{buttonArray}</section>;
+    return <section className={'ColorSelector' + appendClassName(this.props.type)}>{buttonArray}</section>;
   }
 }
