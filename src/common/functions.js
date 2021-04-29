@@ -24,3 +24,15 @@ export function setCookie(object) {
 export function deleteCookie(...names) {
   names.forEach((name) => (document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`));
 }
+
+export function doesExists(thing) {
+  return thing !== undefined && thing !== null;
+}
+
+export function sameId(obj1, obj2) {
+  const bothObjectsExists = doesExists(obj1) && doesExists(obj2);
+
+  if (!bothObjectsExists) return false;
+
+  return obj1.id === obj2.id;
+}

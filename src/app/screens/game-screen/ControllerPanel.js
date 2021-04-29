@@ -8,18 +8,19 @@ import ColorSelector from './controller-panel/ColorSelector';
 export const SELECT = 'select';
 export const CONFIRM = 'confirm';
 
-const me = Player(getCookie());
 export default class ControllerPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selected: this.props.selected || -1,
     };
+    const game = this.props.game;
+    const myId = Number(getCookie().id);
 
+    this.me = { id: myId };
     //    socket.connect()
 
     socket.on('move', (move) => {
-      console.log('yo, its me');
       const [playerRaw, action, data] = unpack(move);
       const player = Player(playerRaw);
 
@@ -32,14 +33,14 @@ export default class ControllerPanel extends Component {
   };
 
   change = (i) => {
-    const data = [me, SELECT, [i]];
+    const data = [this.me, SELECT, [i]];
 
     this.ask(...data);
     socket.emit('move', pack(data));
   };
 
   confirm = (i) => {
-    const data = [me, CONFIRM, [i]];
+    const data = [this.me, CONFIRM, [i]];
 
     this.ask(...data);
     socket.emit('move', pack(data));
@@ -59,7 +60,7 @@ export default class ControllerPanel extends Component {
 
   render() {
     const game = this.props.game;
-    const myTurn = game.turn && game.turn.id === me.id;
+    const myTurn = game.turn && game.turn.id === this.me.id;
     const callToAction = myTurn ? 'my-turn' : '';
 
     const disabledColors = [game.host && game.host.color, game.challenger && game.challenger.color];

@@ -13,8 +13,8 @@ import GameScreen from './app/screens/GameScreen';
 import Game from './app/data/Game';
 import { faces } from './common/classes';
 
+if (getCookie().faceName === undefined) setCookie({ faceName: Object.keys(faces)[0] });
 const cookie = getCookie();
-if (cookie.faceName === undefined) setCookie({ faceName: Object.keys(faces)[0] });
 
 export default class App extends Component {
   constructor(props) {

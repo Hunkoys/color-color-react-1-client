@@ -1,26 +1,42 @@
 import { Component } from 'react';
 import AppContext from '../../AppContext';
-import { faces } from '../../common/classes';
-import { getCookie } from '../../common/functions';
 import { server, socket } from '../../common/network';
-import { pack, unpack } from '../../common/network/packer';
 import Button from '../../generic-components/Button';
 import Spacer from '../../generic-components/Spacer';
 import Card from '../components/Card';
 import Screen from '../components/Screen';
 import Game from '../data/Game';
-import Player from '../data/Player';
-import logic from '../game/logic';
+import logic, { BoardManager } from '../game/logic';
 import Board from './game-screen/Board';
-import ControllerPanel, { CONFIRM, SELECT } from './game-screen/ControllerPanel';
+import ControllerPanel, { CONFIRM } from './game-screen/ControllerPanel';
 import PlayersHud from './game-screen/PlayersHud';
 import LoadingScreen from './LoadingScreen';
 import Splash from './Splash';
 
-const me = Player(getCookie());
+const HOST = 'host';
+const CHALLENGER = 'challenger';
+const NONE = 'none';
+
+const TOP = [0, -1];
+const RIGHT = [1, 0];
+const BOTTOM = [0, 1];
+const LEFT = [-1, 0];
+const CROSS = [TOP, RIGHT, BOTTOM, LEFT];
+
+function getRole(player, game) {
+  if (player.id == game.host.id) return HOST;
+  if (player.id == game.challenger.id) return CHALLENGER;
+  return NONE;
+}
+
+function applyToRole(player, game) {
+  const role = getRole(player, game);
+  const result = {};
+  result[role] = player;
+  return result;
+}
 
 function is(objWithId1, objWithId2) {
-  console.log('is', typeof objWithId1.id, typeof objWithId2.id);
   return objWithId1.id === objWithId2.id;
 }
 
@@ -38,13 +54,102 @@ export default class GameScreen extends Component {
     });
   }
 
-  act = (player, action, data) => {
-    if (action === CONFIRM) {
-      this.setState((game) => {
-        const board = logic.consume(player, game.board, 1);
-        const turn = logic.switchTurn(game);
-        return { board, turn };
+  colorize(partialPlayer, color) {
+    this.setState((game) => {
+      const player = is(partialPlayer, game.host) ? game.host : game.challenger;
+      player.color = color;
+
+      const all = player.squares.all;
+      all.forEach((square) => {
+        logic.setColor(game.board, square, color);
       });
+      return { ...game, ...applyToRole(player, game) };
+    });
+  }
+
+  switchTurn() {
+    this.setState((game) => {
+      return { turn: logic.switchTurn(game) };
+    });
+  }
+
+  consume(player, range) {
+    this.setState((game) => {
+      const [me, enemy] = is(player, game.host) ? [game.host, game.challenger] : [game.challenger, game.host];
+      const mySquares = me.squares.all;
+      const enemySquares = enemy.squares.all;
+
+      // console.log(`my Squares: `, mySquares);
+
+      function isFree(square) {
+        const notIn = (list) => !logic.searchIn(list, square);
+        return notIn(mySquares) && notIn(enemySquares);
+      }
+
+      function getColor(square, offset) {
+        return logic.getColor(game.board, square, offset);
+      }
+
+      const pending = [];
+      function collectSquare(square) {
+        mySquares.push(square);
+        pending.push(square);
+      }
+
+      const edges = me.squares.edges;
+
+      const newEdges = edges.filter((edge) => {
+        let isEdge = false;
+
+        // console.log('edging');
+
+        CROSS.forEach((offset) => {
+          // console.log('offseting');
+
+          const side = logic.getRelativeSquare(edge, offset);
+          const color = getColor(side);
+
+          if (color === undefined) return;
+          if (isFree(side)) {
+            // console.log(`is Free: ${side}`);
+            const myColor = getColor(edge);
+            if (color === myColor) {
+              // console.log(`Match! : ${myColor} ${color}`);
+              collectSquare(side);
+            } else isEdge = true;
+          }
+        });
+
+        return isEdge;
+      });
+
+      pending.forEach((square) => {
+        // console.log(`pending: ${square}`);
+        const isEdge = CROSS.some((offset) => {
+          // console.log(`pending offset: ${offset}`);
+          const side = logic.getRelativeSquare(square, offset);
+          if (getColor(side) !== undefined && isFree(side)) return true;
+          else return false;
+        });
+
+        if (isEdge) newEdges.push(square);
+      });
+
+      // console.log(newEdges);
+
+      me.squares.edges = newEdges;
+      return game;
+    });
+  }
+
+  act = (player, action, data) => {
+    console.warn('acting');
+    if (action === CONFIRM) {
+      const [color] = data;
+
+      this.colorize(player, color);
+      this.consume(player, 1);
+      this.switchTurn();
     }
   };
 

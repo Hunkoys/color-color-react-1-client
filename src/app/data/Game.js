@@ -14,5 +14,3 @@ export default function Game(assumed) {
   process(schema, assumed);
   return schema;
 }
-
-const game = Game({});
