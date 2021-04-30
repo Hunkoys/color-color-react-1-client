@@ -48,6 +48,7 @@ export default class GameScreen extends Component {
     socket.connect();
     socket.on('player-joined', (data) => {
       const game = Game(data);
+
       if (this.props.game.challenger.id === undefined) {
         this.setState(game);
       }
@@ -142,6 +143,14 @@ export default class GameScreen extends Component {
     });
   }
 
+  updateScore() {
+    this.setState(({ host, challenger }) => {
+      host.score = host.squares.all.length;
+      challenger.score = challenger.squares.all.length;
+      return { host, challenger };
+    });
+  }
+
   act = (player, action, data) => {
     console.warn('acting');
     if (action === CONFIRM) {
@@ -149,6 +158,7 @@ export default class GameScreen extends Component {
 
       this.colorize(player, color);
       this.consume(player, 1);
+      this.updateScore();
       this.switchTurn();
     }
   };
