@@ -6,14 +6,16 @@
 
   .host {
     display: flex;
-  }
 
-  .emoji {
-    font-size: 26px;
-  }
+    .emoji {
+      font-size: 26px;
+      margin: 0 8px 0 4px;
+      transform: scale(1.2);
+    }
 
-  .name {
-    font-size: 2rem;
+    .name {
+      font-size: 2rem;
+    }
   }
 
   .board-size {
