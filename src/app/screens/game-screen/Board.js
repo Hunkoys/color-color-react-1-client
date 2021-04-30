@@ -4,14 +4,14 @@ import Square from './board/Square';
 export default class Board extends Component {
   render() {
     const colorTable = this.props.colorTable || [];
-    const glow = this.props.glow || [];
+    const highlightedSquares = this.props.highlight ? this.props.highlight.squares.all : [];
     return (
       <div className="Board">
         {colorTable.map((row, y) => (
           <div key={`row${y}`} className={`board row`}>
             {row.map((colorIndex, x) => {
-              const isGlow = glow.some((owned) => {
-                return owned[0] === x && owned[1] === y;
+              const isGlow = highlightedSquares.some(([xOwned, yOwned]) => {
+                return xOwned === x && yOwned === y;
               });
 
               return <Square color={`board color-${colorIndex}`} glow={isGlow} key={`square-${x}`}></Square>;

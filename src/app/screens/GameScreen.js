@@ -194,7 +194,7 @@ export default class GameScreen extends Component {
                 <PlayersHud left={game.host} right={game.challenger} turn={turn} />
                 <Spacer type="h-gutter" />
                 <Spacer type="h-gutter" />
-                <Board colorTable={game.board.table} />
+                <Board colorTable={game.board.table} highlight={game.turn} />
                 <Spacer type="h-gutter" />
                 <ControllerPanel game={this.state} onAct={this.act} />
                 <Spacer type="h-gutter" />

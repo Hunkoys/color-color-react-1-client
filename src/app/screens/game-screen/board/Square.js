@@ -3,6 +3,14 @@ import { appendClassName } from '../../../../common/functions';
 
 export default class Square extends Component {
   render() {
-    return <div className={'Square' + appendClassName(this.props.type) + appendClassName(this.props.color)}></div>;
+    const glow = this.props.glow ? 'glow' : undefined;
+
+    return (
+      <div
+        className={
+          'Square' + appendClassName(this.props.type) + appendClassName(this.props.color) + appendClassName(glow)
+        }
+      ></div>
+    );
   }
 }

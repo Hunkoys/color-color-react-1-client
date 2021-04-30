@@ -53,12 +53,20 @@ $v-gutter: $gutter;
 
 $space-lrg: 36px;
 
-$color-0: #fefe33;
-$color-1: #66b032;
-$color-2: #0247fe;
-$color-3: #8601af;
-$color-4: #fe2712;
-$color-5: #fb9902;
-$color-6: #f6f6f6;
-$color-7: #333333;
-$color-8: #502a11;
+$colors: (
+  0: #f7f711,
+  1: #85d84b,
+  2: #0247fe,
+  3: #b218e0,
+  4: #fe2712,
+  5: #fab245,
+  6: #fefefe,
+  7: #333333,
+  8: #502a11,
+);
+
+@each $i, $color in $colors {
+  .color-#{$i} {
+    background: $color;
+  }
+}

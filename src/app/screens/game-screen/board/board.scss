@@ -12,8 +12,30 @@ $size: 26px;
   }
 
   &.Square {
+    position: relative;
     display: inline-block;
     height: $size;
     width: $size;
+
+    &.glow {
+      z-index: 1;
+
+      @each $i, $color in $colors {
+        &.color-#{$i} {
+          animation: glow-#{$i} 1.7s cubic-bezier(0.9, -0.01, 0.44, 0.93) 0s infinite alternate;
+        }
+      }
+    }
+  }
+}
+
+@each $i, $color in $colors {
+  @keyframes glow-#{$i} {
+    from {
+      box-shadow: 0 0 0 0 $color;
+    }
+    to {
+      box-shadow: 0 0 1px 2px $color;
+    }
   }
 }
