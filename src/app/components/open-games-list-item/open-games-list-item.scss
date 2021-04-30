@@ -4,6 +4,14 @@
   justify-content: space-between;
   padding: $padding-med;
 
+  .host {
+    display: flex;
+  }
+
+  .emoji {
+    font-size: 26px;
+  }
+
   .name {
     font-size: 2rem;
   }
