@@ -112,3 +112,11 @@ body {
 }
 
 // #4ae2e2,
+
+.overlay {
+  position: absolute;
+  z-index: 100;
+  & > * {
+    box-shadow: 0 0 20px 300px #333333aa;
+  }
+}

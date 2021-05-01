@@ -11,6 +11,7 @@ import Board from './game-screen/Board';
 import ControllerPanel, { CONFIRM } from './game-screen/ControllerPanel';
 import PlayersHud from './game-screen/PlayersHud';
 import LoadingScreen from './LoadingScreen';
+import Menu from './Menu';
 import Splash from './Splash';
 
 const HOST = 'host';
@@ -44,6 +45,7 @@ export default class GameScreen extends Component {
   constructor(props) {
     super(props);
     this.state = this.props.game;
+    this.state.menuIsOpen = false;
 
     socket.connect();
     socket.on('player-joined', (data) => {
@@ -163,6 +165,12 @@ export default class GameScreen extends Component {
     }
   };
 
+  menu = (command) => {
+    if (command === 'back') {
+      this.setState({ menuIsOpen: false });
+    }
+  };
+
   render() {
     const game = this.state;
 
@@ -171,12 +179,12 @@ export default class GameScreen extends Component {
         {(app) => {
           const [screen, setScreen] = app.screenHook;
 
-          const quitGame = () => {
-            socket.disconnect();
-            server('quit-game').then((success) => {
-              if (success) setScreen(<Splash />);
-            });
-            setScreen(<LoadingScreen />);
+          const openMenu = () => {
+            this.setState({ menuIsOpen: true });
+            // server('quit-game').then((success) => {
+            //   if (success) setScreen(<Splash />);
+            // });
+            // setScreen(<LoadingScreen />);
           };
 
           const placement = {
@@ -185,11 +193,13 @@ export default class GameScreen extends Component {
           };
           const turn = is(game.turn, placement.left) ? 'left' : is(game.turn, placement.right) ? 'right' : 'none';
 
+          const overlay = this.state.menuIsOpen ? <Menu onCommand={this.menu} /> : undefined;
+
           return (
-            <Screen name="GameScreen">
+            <Screen name="GameScreen" overlay={overlay}>
               <Card>
-                <Button type="block" action={quitGame}>
-                  Quit
+                <Button type="block" action={openMenu}>
+                  Menu
                 </Button>
                 <PlayersHud left={game.host} right={game.challenger} turn={turn} />
                 <Spacer type="h-gutter" />

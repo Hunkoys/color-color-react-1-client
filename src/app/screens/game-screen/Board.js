@@ -4,7 +4,8 @@ import Square from './board/Square';
 export default class Board extends Component {
   render() {
     const colorTable = this.props.colorTable || [];
-    const highlightedSquares = this.props.highlight ? this.props.highlight.squares.all : [];
+    const highlightedSquares =
+      this.props.highlight && this.props.highlight.squares.all ? this.props.highlight.squares.all : [];
     return (
       <div className="Board">
         {colorTable.map((row, y) => (

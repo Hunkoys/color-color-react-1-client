@@ -16,6 +16,7 @@ $size: 26px;
     display: inline-block;
     height: $size;
     width: $size;
+    z-index: 0;
 
     &.glow {
       z-index: 1;
