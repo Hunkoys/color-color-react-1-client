@@ -15,7 +15,7 @@ export default class OpponentLeft extends Component {
         <span>
           Too bad!
           <span className="highlight-text">{` ${faces[this.props.enemy.faceName]} ${this.props.enemy.username}`}</span>{' '}
-          must have pussied out. They left the game
+          has left the game
         </span>
         <Spacer type="h-gutter" />
         <Button action={this.props.action}>HOME</Button>
