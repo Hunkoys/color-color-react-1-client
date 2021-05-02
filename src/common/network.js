@@ -33,7 +33,8 @@ export const server = async (command, data) => {
 };
 
 // const URL = 'http://dominicvictoria.com';
-const URL = 'http://localhost:2500';
+// const URL = 'http://localhost:2500';
+const URL = 'http://192.168.0.189:2500';
 export const socket = io(URL, { autoConnect: false });
 
 socket.onAny((event, ...args) => {

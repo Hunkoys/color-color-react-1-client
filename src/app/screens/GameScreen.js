@@ -55,6 +55,10 @@ export default class GameScreen extends Component {
         this.setState(game);
       }
     });
+
+    socket.on('enemy-quit', () => {
+      console.log('quited');
+    });
   }
 
   colorize(partialPlayer, color) {
@@ -177,14 +181,22 @@ export default class GameScreen extends Component {
             this.setState({ menuIsOpen: true });
           };
 
-          const menu = (command) => {
+          const menuCommand = (command) => {
             if (command === 'back') {
               this.setState({ menuIsOpen: false });
             }
+
             if (command === 'quit') {
-              server('quit-game').then((success) => {
-                if (success) setScreen(<Splash />);
-              });
+              server('quit-game')
+                .then((success) => {
+                  if (success) {
+                    socket.emit('quit');
+                    socket.disconnect();
+                    setScreen(<Splash />);
+                  }
+                  // else setScreen(failedScreen)
+                })
+                .catch((error) => {});
               setScreen(<LoadingScreen />);
             }
           };
@@ -195,7 +207,7 @@ export default class GameScreen extends Component {
           };
           const turn = is(game.turn, placement.left) ? 'left' : is(game.turn, placement.right) ? 'right' : 'none';
 
-          const overlay = this.state.menuIsOpen ? <Menu onCommand={menu} /> : undefined;
+          const overlay = this.state.menuIsOpen ? <Menu onCommand={menuCommand} /> : undefined;
 
           return (
             <Screen name="GameScreen" overlay={overlay}>
