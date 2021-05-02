@@ -271,12 +271,12 @@ export default class GameScreen extends Component {
 
           let status, gameOverContent;
 
-          if (true) {
+          if (this.state.gameOver) {
             status = this.state.opponentLeftIsOpen ? keywords.enemyLeft : me.requestedRematch ? keywords.waiting : '';
 
             const iWon = me.score > enemy.score;
 
-            gameOverContent = false ? (
+            gameOverContent = iWon ? (
               <Fragment>
                 <Title>You Won!</Title>
                 <Face value={faces[me.faceName]} />
@@ -297,7 +297,7 @@ export default class GameScreen extends Component {
             );
           }
 
-          const overlay = true ? (
+          const overlay = this.state.gameOver ? (
             <GameOver onCommand={gameOverCommand} status={status} enemy={enemy}>
               {gameOverContent}
             </GameOver>
