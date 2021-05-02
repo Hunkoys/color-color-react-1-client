@@ -12,6 +12,7 @@ import ControllerPanel, { CONFIRM } from './game-screen/ControllerPanel';
 import PlayersHud from './game-screen/PlayersHud';
 import LoadingScreen from './LoadingScreen';
 import Menu from './Menu';
+import QuitConfirmation from './QuitConfirmation';
 import Splash from './Splash';
 
 const HOST = 'host';
@@ -46,6 +47,7 @@ export default class GameScreen extends Component {
     super(props);
     this.state = this.props.game;
     this.state.menuIsOpen = false;
+    this.state.quitConfirmIsOpen = false;
 
     socket.connect();
     socket.on('player-joined', (data) => {
@@ -184,8 +186,12 @@ export default class GameScreen extends Component {
           const menuCommand = (command) => {
             if (command === 'back') {
               this.setState({ menuIsOpen: false });
+            } else if (command === 'quit') {
+              this.setState({ quitConfirmIsOpen: true });
             }
+          };
 
+          const quitCommand = (command) => {
             if (command === 'quit') {
               server('quit-game')
                 .then((success) => {
@@ -198,16 +204,22 @@ export default class GameScreen extends Component {
                 })
                 .catch((error) => {});
               setScreen(<LoadingScreen />);
-            }
+            } else if (command === 'cancel') this.setState({ quitConfirmIsOpen: false });
           };
+
+          const overlay = this.state.menuIsOpen ? (
+            this.state.quitConfirmIsOpen ? (
+              <QuitConfirmation onCommand={quitCommand} />
+            ) : (
+              <Menu onCommand={menuCommand} />
+            )
+          ) : undefined;
 
           const placement = {
             left: game.host,
             right: game.challenger,
           };
           const turn = is(game.turn, placement.left) ? 'left' : is(game.turn, placement.right) ? 'right' : 'none';
-
-          const overlay = this.state.menuIsOpen ? <Menu onCommand={menuCommand} /> : undefined;
 
           return (
             <Screen name="GameScreen" overlay={overlay}>
