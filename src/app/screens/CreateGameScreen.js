@@ -54,8 +54,8 @@ function createCube(l) {
 }
 
 const boardSizes = {
-  small: createCube(3),
-  // small: createCube(7),
+  // small: createCube(3),
+  small: createCube(7),
   medium: createCube(9),
   large: createCube(11),
 };
