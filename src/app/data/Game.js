@@ -1,4 +1,4 @@
-import process, { number } from '../../common/schema';
+import process, { boolean, number } from '../../common/schema';
 import Board from './Board';
 import Player from './Player';
 
@@ -9,6 +9,7 @@ export default function Game(assumed) {
     challenger: Player(),
     board: Board(),
     turn: Player(),
+    waitingForOpponent: boolean,
   };
 
   process(schema, assumed);

@@ -1,17 +1,20 @@
 import { Component } from 'react';
 import AppContext from '../../AppContext';
+import { getCookie } from '../../common/functions';
 import { server, socket } from '../../common/network';
 import Button from '../../generic-components/Button';
 import Spacer from '../../generic-components/Spacer';
 import Card from '../components/Card';
 import Screen from '../components/Screen';
 import Game from '../data/Game';
-import logic, { BoardManager } from '../game/logic';
+import Player from '../data/Player';
+import logic from '../game/logic';
 import Board from './game-screen/Board';
 import ControllerPanel, { CONFIRM } from './game-screen/ControllerPanel';
 import PlayersHud from './game-screen/PlayersHud';
 import LoadingScreen from './LoadingScreen';
 import Menu from './Menu';
+import OpponentLeft from './OpponentLeft';
 import QuitConfirmation from './QuitConfirmation';
 import Splash from './Splash';
 
@@ -45,21 +48,30 @@ function is(objWithId1, objWithId2) {
 export default class GameScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = this.props.game;
-    this.state.menuIsOpen = false;
-    this.state.quitConfirmIsOpen = false;
+
+    const game = this.props.game;
+    const [me, enemy] = is(Player(getCookie()), game.host)
+      ? [game.host, game.challenger]
+      : [game.challenger, game.host];
+
+    this.state = {
+      ...game,
+      menuIsOpen: false,
+      quitConfirmIsOpen: false,
+      opponentLeftIsOpen: enemy.id === undefined && game.waitingForOpponent === false,
+    };
 
     socket.connect();
     socket.on('player-joined', (data) => {
       const game = Game(data);
 
-      if (this.props.game.challenger.id === undefined) {
+      if (game.waitingForOpponent) {
         this.setState(game);
       }
     });
 
     socket.on('enemy-quit', () => {
-      console.log('quited');
+      this.setState({ opponentLeftIsOpen: true });
     });
   }
 
@@ -207,13 +219,17 @@ export default class GameScreen extends Component {
             } else if (command === 'cancel') this.setState({ quitConfirmIsOpen: false });
           };
 
-          const overlay = this.state.menuIsOpen ? (
+          const overlay = this.state.opponentLeftIsOpen ? (
+            <OpponentLeft enemy={Player(getCookie()).id === game.host.id ? game.host : game.challenger} />
+          ) : this.state.menuIsOpen ? (
             this.state.quitConfirmIsOpen ? (
               <QuitConfirmation onCommand={quitCommand} />
             ) : (
               <Menu onCommand={menuCommand} />
             )
           ) : undefined;
+
+          console.log(this.enemy);
 
           const placement = {
             left: game.host,

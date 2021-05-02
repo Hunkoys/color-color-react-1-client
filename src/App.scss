@@ -88,6 +88,11 @@ body {
   }
 }
 
+.highlight-text {
+  font-weight: bold;
+  color: $highlight-color;
+}
+
 .Spacer {
   $other: 100%;
 
