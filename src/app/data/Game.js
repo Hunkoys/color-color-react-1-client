@@ -10,6 +10,7 @@ export default function Game(assumed) {
     board: Board(),
     turn: Player(),
     waitingForOpponent: boolean,
+    gameOver: boolean,
   };
 
   process(schema, assumed);

@@ -15,9 +15,13 @@ export default class QuitConfirmation extends Component {
     return (
       <Card type="QuitConfirmation">
         <Title>Confirm Quit</Title>
-        <Button action={act('quit')}>QUIT</Button>
+        <Button action={act('quit')} type="block">
+          QUIT
+        </Button>
         <Spacer type="back-button-space" />
-        <Button action={act('cancel')}>CANCEL</Button>
+        <Button action={act('cancel')} type="block">
+          CANCEL
+        </Button>
       </Card>
     );
   }

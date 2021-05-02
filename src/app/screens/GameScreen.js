@@ -65,7 +65,7 @@ export default class GameScreen extends Component {
     socket.on('player-joined', (data) => {
       const game = Game(data);
 
-      if (game.waitingForOpponent) {
+      if (this.props.game.waitingForOpponent) {
         this.setState(game);
       }
     });
@@ -183,6 +183,19 @@ export default class GameScreen extends Component {
     }
   };
 
+  quit = (then) => {
+    server('quit-game')
+      .then((success) => {
+        if (success) {
+          socket.emit('quit');
+          socket.disconnect();
+          then();
+        }
+        // else setScreen(failedScreen)
+      })
+      .catch((error) => {});
+  };
+
   render() {
     const game = this.state;
 
@@ -205,22 +218,21 @@ export default class GameScreen extends Component {
 
           const quitCommand = (command) => {
             if (command === 'quit') {
-              server('quit-game')
-                .then((success) => {
-                  if (success) {
-                    socket.emit('quit');
-                    socket.disconnect();
-                    setScreen(<Splash />);
-                  }
-                  // else setScreen(failedScreen)
-                })
-                .catch((error) => {});
+              this.quit(() => setScreen(<Splash />));
               setScreen(<LoadingScreen />);
             } else if (command === 'cancel') this.setState({ quitConfirmIsOpen: false });
           };
 
+          const goHome = () => {
+            this.quit(() => setScreen(<Splash />));
+            setScreen(<LoadingScreen />);
+          };
+
           const overlay = this.state.opponentLeftIsOpen ? (
-            <OpponentLeft enemy={Player(getCookie()).id === game.host.id ? game.host : game.challenger} />
+            <OpponentLeft
+              enemy={Player(getCookie()).id === game.host.id ? game.challenger : game.host}
+              action={goHome}
+            />
           ) : this.state.menuIsOpen ? (
             this.state.quitConfirmIsOpen ? (
               <QuitConfirmation onCommand={quitCommand} />
@@ -228,8 +240,6 @@ export default class GameScreen extends Component {
               <Menu onCommand={menuCommand} />
             )
           ) : undefined;
-
-          console.log(this.enemy);
 
           const placement = {
             left: game.host,

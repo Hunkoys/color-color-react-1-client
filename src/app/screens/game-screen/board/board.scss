@@ -1,9 +1,11 @@
 $size: 26px;
 
 .Board {
-  border: 5px solid #333;
+  padding: 1px;
+  border: 4px solid #333;
   border-radius: 5px;
   box-shadow: $shadow;
+  background: $substance-color-shaded;
 }
 
 .board {
