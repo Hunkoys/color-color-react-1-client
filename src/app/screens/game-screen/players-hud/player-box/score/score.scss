@@ -1,0 +1,17 @@
+$score-size: 35px;
+
+.Score {
+  width: $score-size;
+  height: $score-size;
+  padding-top: 6px;
+  border: 3px solid #222;
+  border-radius: $score-size / 4;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0px 0px 3px $shadow-color;
+
+  &.color-0,
+  &.color-6 {
+    color: #222222;
+  }
+}

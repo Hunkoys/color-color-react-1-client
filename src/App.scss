@@ -3,6 +3,7 @@
 @import './generic-components/generic-components';
 @import './app/components/app-components';
 @import './app/screens/screens';
+@import './app/overlays/overlays';
 
 * {
   box-sizing: border-box;
@@ -117,6 +118,10 @@ body {
 }
 
 // #4ae2e2,
+
+.padded {
+  padding: $padding-lrg;
+}
 
 .overlay {
   position: absolute;

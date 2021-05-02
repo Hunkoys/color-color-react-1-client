@@ -1,21 +1,30 @@
-import { Component } from 'react';
+import { Component, Fragment } from 'react';
 import AppContext from '../../AppContext';
+import { faces } from '../../common/classes';
 import { getCookie } from '../../common/functions';
 import { server, socket } from '../../common/network';
+import { unpack } from '../../common/network/packer';
+import Box from '../../generic-components/Box';
 import Button from '../../generic-components/Button';
 import Spacer from '../../generic-components/Spacer';
 import Card from '../components/Card';
 import Screen from '../components/Screen';
+import Text from '../components/Text';
+import Title from '../components/Title';
 import Game from '../data/Game';
 import Player from '../data/Player';
 import logic from '../game/logic';
+import GameOver, { keywords as gameOverKeywords, keywords } from '../overlays/GameOver';
 import Board from './game-screen/Board';
 import ControllerPanel, { CONFIRM } from './game-screen/ControllerPanel';
+import Face from './game-screen/players-hud/player-box/Face';
+import Score from './game-screen/players-hud/player-box/Score';
 import PlayersHud from './game-screen/PlayersHud';
 import LoadingScreen from './LoadingScreen';
 import Menu from './Menu';
 import OpponentLeft from './OpponentLeft';
 import QuitConfirmation from './QuitConfirmation';
+import ReturnToGameScreen from './ReturnToGameScreen';
 import Splash from './Splash';
 
 const HOST = 'host';
@@ -45,6 +54,17 @@ function is(objWithId1, objWithId2) {
   return objWithId1.id === objWithId2.id;
 }
 
+function initState(game) {
+  const [me, enemy] = is(Player(getCookie()), game.host) ? [game.host, game.challenger] : [game.challenger, game.host];
+
+  return {
+    ...game,
+    menuIsOpen: false,
+    quitConfirmIsOpen: false,
+    opponentLeftIsOpen: enemy.id === undefined && game.waitingForOpponent === false,
+  };
+}
+
 export default class GameScreen extends Component {
   constructor(props) {
     super(props);
@@ -54,12 +74,7 @@ export default class GameScreen extends Component {
       ? [game.host, game.challenger]
       : [game.challenger, game.host];
 
-    this.state = {
-      ...game,
-      menuIsOpen: false,
-      quitConfirmIsOpen: false,
-      opponentLeftIsOpen: enemy.id === undefined && game.waitingForOpponent === false,
-    };
+    this.state = initState(game);
 
     socket.connect();
     socket.on('player-joined', (data) => {
@@ -72,6 +87,13 @@ export default class GameScreen extends Component {
 
     socket.on('enemy-quit', () => {
       this.setState({ opponentLeftIsOpen: true });
+      console.log('quited');
+    });
+
+    socket.on('rematch-granted', (data) => {
+      const game = Game(data);
+
+      this.setState(initState(game));
     });
   }
 
@@ -164,10 +186,16 @@ export default class GameScreen extends Component {
   }
 
   updateScore() {
-    this.setState(({ host, challenger }) => {
+    this.setState(({ host, challenger, board }) => {
       host.score = host.squares.all.length;
       challenger.score = challenger.squares.all.length;
-      return { host, challenger };
+
+      const nOfSquares = board.size.w * board.size.h;
+      const totalScore = host.score + challenger.score;
+
+      const gameOver = nOfSquares === totalScore;
+
+      return { host, challenger, gameOver };
     });
   }
 
@@ -197,12 +225,14 @@ export default class GameScreen extends Component {
   };
 
   render() {
-    const game = this.state;
+    const game = Game(this.state);
 
     return (
       <AppContext.Consumer>
         {(app) => {
           const [screen, setScreen] = app.screenHook;
+          const [me, enemy] =
+            getCookie().id == game.host.id ? [game.host, game.challenger] : [game.challenger, game.host];
 
           const openMenu = () => {
             this.setState({ menuIsOpen: true });
@@ -228,11 +258,51 @@ export default class GameScreen extends Component {
             setScreen(<LoadingScreen />);
           };
 
-          const overlay = this.state.opponentLeftIsOpen ? (
-            <OpponentLeft
-              enemy={Player(getCookie()).id === game.host.id ? game.challenger : game.host}
-              action={goHome}
-            />
+          const gameOverCommand = (command) => {
+            if (command === gameOverKeywords.playAgain) {
+              socket.emit('request-rematch');
+              me.requestedRematch = true;
+              this.setState(applyToRole(me, game));
+            } else if (command === gameOverKeywords.home) {
+              this.quit(() => setScreen(<Splash />));
+              setScreen(<LoadingScreen />);
+            }
+          };
+
+          let status, gameOverContent;
+
+          if (true) {
+            status = this.state.opponentLeftIsOpen ? keywords.enemyLeft : me.requestedRematch ? keywords.waiting : '';
+
+            const iWon = me.score > enemy.score;
+
+            gameOverContent = false ? (
+              <Fragment>
+                <Title>You Won!</Title>
+                <Face value={faces[me.faceName]} />
+                <Spacer type="h-gutter" />
+                <Box type="score">
+                  <Score value={me.score} color={me.color} />
+                  <Text type="lrg">-</Text>
+                  <Score value={enemy.score} color={enemy.color} />
+                </Box>
+                <Spacer type="h-gutter" />
+              </Fragment>
+            ) : (
+              <Fragment>
+                <Title>You Lost</Title>
+                <Face value="👎" />
+                <Spacer type="h-gutter" />
+              </Fragment>
+            );
+          }
+
+          const overlay = true ? (
+            <GameOver onCommand={gameOverCommand} status={status} enemy={enemy}>
+              {gameOverContent}
+            </GameOver>
+          ) : this.state.opponentLeftIsOpen ? (
+            <OpponentLeft enemy={enemy} action={goHome} />
           ) : this.state.menuIsOpen ? (
             this.state.quitConfirmIsOpen ? (
               <QuitConfirmation onCommand={quitCommand} />
@@ -250,9 +320,8 @@ export default class GameScreen extends Component {
           return (
             <Screen name="GameScreen" overlay={overlay}>
               <Card>
-                <Button type="block" action={openMenu}>
-                  Menu
-                </Button>
+                <Button action={openMenu}>MENU</Button>
+                <Spacer type="h-gutter" />
                 <PlayersHud left={game.host} right={game.challenger} turn={turn} />
                 <Spacer type="h-gutter" />
                 <Spacer type="h-gutter" />

@@ -1,4 +1,4 @@
-import process, { number, string } from '../../common/schema';
+import process, { boolean, number, string } from '../../common/schema';
 import Squares from './Squares';
 
 export default function Player(assumed) {
@@ -9,6 +9,7 @@ export default function Player(assumed) {
     color: number,
     score: number,
     squares: Squares(),
+    requestedRematch: boolean,
   };
 
   process(schema, assumed);

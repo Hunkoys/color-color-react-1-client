@@ -1,0 +1,16 @@
+.GameOver {
+  .Face {
+    font-size: 80px;
+    text-shadow: 0 0 30px $highlight-color;
+  }
+
+  .score {
+    display: flex;
+    justify-content: space-around;
+    width: 100px;
+
+    .Text.lrg {
+      font-size: 2em;
+    }
+  }
+}

@@ -1,6 +1,7 @@
+@import 'player-box/score/score';
+
 $face-size: 70px;
-$score-size: 35px;
-$font-size: 1.4em;
+$font-size: 1.8em;
 $lower-block-gutter: 10px;
 
 .PlayersHud {
@@ -13,7 +14,10 @@ $lower-block-gutter: 10px;
     flex-direction: column;
 
     .Text {
-      height: $font-size;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: calc(#{$font-size} * 0.8);
       font-size: $font-size;
       text-shadow: 2px 2px $shadow-color;
     }
@@ -34,7 +38,7 @@ $lower-block-gutter: 10px;
 
     &.highlight {
       .Face {
-        text-shadow: 0 0 10px $highlight-color;
+        text-shadow: $face-glow;
       }
     }
   }
@@ -50,21 +54,5 @@ $lower-block-gutter: 10px;
     line-height: $face-size;
 
     transform: scale(2.3);
-  }
-
-  .Score {
-    width: $score-size;
-    height: $score-size;
-    padding-top: 6px;
-    border: 3px solid #222;
-    border-radius: $score-size / 4;
-    color: #fff;
-    text-align: center;
-    text-shadow: 0px 0px 3px $shadow-color;
-
-    &.color-0,
-    &.color-6 {
-      color: #222222;
-    }
   }
 }
