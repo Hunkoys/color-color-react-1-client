@@ -165,12 +165,6 @@ export default class GameScreen extends Component {
     }
   };
 
-  menu = (command) => {
-    if (command === 'back') {
-      this.setState({ menuIsOpen: false });
-    }
-  };
-
   render() {
     const game = this.state;
 
@@ -181,10 +175,18 @@ export default class GameScreen extends Component {
 
           const openMenu = () => {
             this.setState({ menuIsOpen: true });
-            // server('quit-game').then((success) => {
-            //   if (success) setScreen(<Splash />);
-            // });
-            // setScreen(<LoadingScreen />);
+          };
+
+          const menu = (command) => {
+            if (command === 'back') {
+              this.setState({ menuIsOpen: false });
+            }
+            if (command === 'quit') {
+              server('quit-game').then((success) => {
+                if (success) setScreen(<Splash />);
+              });
+              setScreen(<LoadingScreen />);
+            }
           };
 
           const placement = {
@@ -193,7 +195,7 @@ export default class GameScreen extends Component {
           };
           const turn = is(game.turn, placement.left) ? 'left' : is(game.turn, placement.right) ? 'right' : 'none';
 
-          const overlay = this.state.menuIsOpen ? <Menu onCommand={this.menu} /> : undefined;
+          const overlay = this.state.menuIsOpen ? <Menu onCommand={menu} /> : undefined;
 
           return (
             <Screen name="GameScreen" overlay={overlay}>

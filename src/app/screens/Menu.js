@@ -26,7 +26,9 @@ export default class Menu extends Component {
           return (
             <Card type="Menu">
               <Title>Menu</Title>
-              <Button type="block">QUIT</Button>
+              <Button type="block" action={act('quit')}>
+                QUIT
+              </Button>
               <Spacer type="back-button-space" />
               <Button type="block" action={act('back')}>
                 BACK
