@@ -1,17 +1,16 @@
 import { Component } from 'react';
-import AppContext from '../../AppContext';
 import { faces } from '../../common/classes';
-import { appendClassName } from '../../common/functions';
 import Button from '../../generic-components/Button';
 import Spacer from '../../generic-components/Spacer';
 import Card from '../components/Card';
-import GridSelector from '../components/GridSelector';
-import Screen from '../components/Screen';
+import Text from '../components/Text';
 import Title from '../components/Title';
-import GameScreen from './GameScreen';
 
-export default class Menu extends Component {
+export default class EnemyGiveUpRequest extends Component {
   render() {
+    const emoji = faces[this.props.enemy.faceName];
+    const enemyName = this.props.enemy.username;
+
     const act = (command) => {
       const onCommand = this.props.onCommand;
 
@@ -19,18 +18,19 @@ export default class Menu extends Component {
     };
 
     return (
-      <Card type="Menu">
-        <Title>Menu</Title>
-        <Button type="block" action={act('quit')}>
-          QUIT
-        </Button>
+      <Card type="EnemyGiveUpRequest">
+        <Title>Rematch Request</Title>
         <Spacer type="h-gutter" />
-        <Button type="block" action={act('give-up')}>
-          GIVE UP
+        <Text>
+          {emoji} <span className="highlight-text">{enemyName}</span> wants to play again
+        </Text>
+        <Spacer type="h-gutter" />
+        <Button action={act('play')} type="block">
+          PLAY
         </Button>
         <Spacer type="back-button-space" />
-        <Button type="block" action={act('back')}>
-          BACK
+        <Button action={act('leave')} type="block">
+          LEAVE
         </Button>
       </Card>
     );

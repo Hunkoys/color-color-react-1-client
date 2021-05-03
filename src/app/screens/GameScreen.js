@@ -14,6 +14,7 @@ import Title from '../components/Title';
 import Game from '../data/Game';
 import Player from '../data/Player';
 import logic from '../game/logic';
+import GiveUpConfirmation from '../overlays/GiveUpConfirmation';
 import GameOver, { keywords as gameOverKeywords, keywords } from '../overlays/GameOver';
 import Board from './game-screen/Board';
 import ControllerPanel, { CONFIRM } from './game-screen/ControllerPanel';
@@ -26,6 +27,8 @@ import OpponentLeft from './OpponentLeft';
 import QuitConfirmation from './QuitConfirmation';
 import ReturnToGameScreen from './ReturnToGameScreen';
 import Splash from './Splash';
+import EnemyGiveUpRequest from '../overlays/EnemyGiveUpRequest';
+import RematchConfirmWait from '../overlays/RematchConfirmWait';
 
 const HOST = 'host';
 const CHALLENGER = 'challenger';
@@ -61,6 +64,9 @@ function initState(game) {
     ...game,
     menuIsOpen: false,
     quitConfirmIsOpen: false,
+    giveUpConfirmIsOpen: false,
+    enemyGiveUpIsOpen: false,
+    rematchConfirmWaitIsOpen: false,
     opponentLeftIsOpen: enemy.id === undefined && game.waitingForOpponent === false,
   };
 }
@@ -87,13 +93,16 @@ export default class GameScreen extends Component {
 
     socket.on('enemy-quit', () => {
       this.setState({ opponentLeftIsOpen: true });
-      console.log('quited');
     });
 
     socket.on('rematch-granted', (data) => {
       const game = Game(data);
 
       this.setState(initState(game));
+    });
+
+    socket.on('enemy-give-up', () => {
+      this.setState({ enemyGiveUpIsOpen: true });
     });
   }
 
@@ -243,6 +252,8 @@ export default class GameScreen extends Component {
               this.setState({ menuIsOpen: false });
             } else if (command === 'quit') {
               this.setState({ quitConfirmIsOpen: true });
+            } else if (command === 'give-up') {
+              this.setState({ giveUpConfirmIsOpen: true });
             }
           };
 
@@ -251,6 +262,16 @@ export default class GameScreen extends Component {
               this.quit(() => setScreen(<Splash />));
               setScreen(<LoadingScreen />);
             } else if (command === 'cancel') this.setState({ quitConfirmIsOpen: false });
+          };
+
+          const giveUpCommand = (command) => {
+            if (command === 'confirm') {
+              socket.emit('give-up');
+              me.requestedRematch = true;
+              this.setState({ rematchConfirmWaitIsOpen: true, ...applyToRole(me, game) });
+            } else if (command === 'cancel') {
+              this.setState({ giveUpConfirmIsOpen: false });
+            }
           };
 
           const goHome = () => {
@@ -268,7 +289,6 @@ export default class GameScreen extends Component {
               setScreen(<LoadingScreen />);
             }
           };
-
           let status, gameOverContent;
 
           if (this.state.gameOver) {
@@ -297,15 +317,41 @@ export default class GameScreen extends Component {
             );
           }
 
+          const enemyGiveUpCommand = (command) => {
+            if (command === 'play') {
+              socket.emit('request-rematch');
+              me.requestedRematch = true;
+              this.setState(applyToRole(me, game));
+            } else if (command === 'leave') {
+              this.quit(() => setScreen(<Splash />));
+              setScreen(<LoadingScreen />);
+            }
+          };
+
+          const rematchConfirmWaitCommand = (command) => {
+            if (command === 'quit') {
+              this.quit(() => setScreen(<Splash />));
+              setScreen(<LoadingScreen />);
+            }
+          };
+
           const overlay = this.state.gameOver ? (
             <GameOver onCommand={gameOverCommand} status={status} enemy={enemy}>
               {gameOverContent}
             </GameOver>
           ) : this.state.opponentLeftIsOpen ? (
             <OpponentLeft enemy={enemy} action={goHome} />
+          ) : this.state.enemyGiveUpIsOpen ? (
+            <EnemyGiveUpRequest onCommand={enemyGiveUpCommand} enemy={enemy} />
           ) : this.state.menuIsOpen ? (
             this.state.quitConfirmIsOpen ? (
               <QuitConfirmation onCommand={quitCommand} />
+            ) : this.state.giveUpConfirmIsOpen ? (
+              this.state.rematchConfirmWaitIsOpen ? (
+                <RematchConfirmWait onCommand={rematchConfirmWaitCommand} enemy={enemy} />
+              ) : (
+                <GiveUpConfirmation onCommand={giveUpCommand} />
+              )
             ) : (
               <Menu onCommand={menuCommand} />
             )
