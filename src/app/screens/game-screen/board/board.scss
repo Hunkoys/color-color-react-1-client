@@ -25,7 +25,7 @@ $size: 26px;
 
       @each $i, $color in $colors {
         &.color-#{$i} {
-          animation: glow-#{$i} 1000ms cubic-bezier(0.9, -0.01, 0.44, 0.93) 0s infinite alternate;
+          animation: glow-#{$i} 1800ms cubic-bezier(0.9, -0.01, 0.44, 0.93) 0s infinite alternate;
         }
       }
     }
@@ -38,10 +38,12 @@ $size: 26px;
       transform: scale(1);
     }
     70% {
+      // background: $color;
       transform: scale(1);
     }
     100% {
-      transform: scale(1.15);
+      // background: lighten($color, 0%);
+      transform: scale(1.1);
     }
   }
 }
