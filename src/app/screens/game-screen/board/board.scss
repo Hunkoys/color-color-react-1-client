@@ -25,7 +25,7 @@ $size: 26px;
 
       @each $i, $color in $colors {
         &.color-#{$i} {
-          animation: glow-#{$i} 600ms cubic-bezier(0.9, -0.01, 0.44, 0.93) 0s infinite alternate;
+          animation: glow-#{$i} 1000ms cubic-bezier(0.9, -0.01, 0.44, 0.93) 0s infinite alternate;
         }
       }
     }
@@ -34,11 +34,14 @@ $size: 26px;
 
 @each $i, $color in $colors {
   @keyframes glow-#{$i} {
-    from {
-      box-shadow: 0 0 0 0 $color;
+    0% {
+      transform: scale(1);
     }
-    to {
-      box-shadow: 0 0 1px 2px $color;
+    70% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.15);
     }
   }
 }
