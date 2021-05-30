@@ -8,14 +8,14 @@ export default class GiveUpConfirmation extends Component {
   render() {
     return (
       <Card type="GiveUpConfirmation">
-        <Title>Confirm Give Up</Title>
+        <Title>Rematch</Title>
         <Button
           action={() => {
             this.props.onCommand('confirm');
           }}
           type="block"
         >
-          GIVE UP
+          CONFIRM
         </Button>
         <Spacer type="back-button-space" />
         <Button

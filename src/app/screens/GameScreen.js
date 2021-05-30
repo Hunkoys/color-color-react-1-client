@@ -1,3 +1,4 @@
+import Splash from './Splash';
 import { Component, Fragment } from 'react';
 import AppContext from '../../AppContext';
 import { faces } from '../../common/classes';
@@ -22,13 +23,12 @@ import Face from './game-screen/players-hud/player-box/Face';
 import Score from './game-screen/players-hud/player-box/Score';
 import PlayersHud from './game-screen/PlayersHud';
 import LoadingScreen from './LoadingScreen';
-import Menu from './Menu';
-import OpponentLeft from './OpponentLeft';
-import QuitConfirmation from './QuitConfirmation';
-import ReturnToGameScreen from './ReturnToGameScreen';
-import Splash from './Splash';
+import Menu from '../overlays/Menu';
+import OpponentLeft from '../overlays/OpponentLeft';
+import QuitConfirmation from '../overlays/QuitConfirmation';
 import EnemyGiveUpRequest from '../overlays/EnemyGiveUpRequest';
 import RematchConfirmWait from '../overlays/RematchConfirmWait';
+import ReturnToGameScreen from './ReturnToGameScreen';
 
 const HOST = 'host';
 const CHALLENGER = 'challenger';
@@ -101,7 +101,7 @@ export default class GameScreen extends Component {
       this.setState(initState(game));
     });
 
-    socket.on('enemy-give-up', () => {
+    socket.on('rematch-requested', () => {
       this.setState({ enemyGiveUpIsOpen: true });
     });
   }
@@ -252,7 +252,7 @@ export default class GameScreen extends Component {
               this.setState({ menuIsOpen: false });
             } else if (command === 'quit') {
               this.setState({ quitConfirmIsOpen: true });
-            } else if (command === 'give-up') {
+            } else if (command === 'rematch') {
               this.setState({ giveUpConfirmIsOpen: true });
             }
           };
@@ -266,7 +266,7 @@ export default class GameScreen extends Component {
 
           const giveUpCommand = (command) => {
             if (command === 'confirm') {
-              socket.emit('give-up');
+              socket.emit('request-rematch');
               me.requestedRematch = true;
               this.setState({ rematchConfirmWaitIsOpen: true, ...applyToRole(me, game) });
             } else if (command === 'cancel') {

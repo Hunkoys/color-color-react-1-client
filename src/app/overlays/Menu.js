@@ -8,7 +8,7 @@ import Card from '../components/Card';
 import GridSelector from '../components/GridSelector';
 import Screen from '../components/Screen';
 import Title from '../components/Title';
-import GameScreen from './GameScreen';
+import GameScreen from '../screens/GameScreen';
 
 export default class Menu extends Component {
   render() {
@@ -25,8 +25,8 @@ export default class Menu extends Component {
           QUIT
         </Button>
         <Spacer type="h-gutter" />
-        <Button type="block" action={act('give-up')}>
-          GIVE UP
+        <Button type="block" action={act('rematch')}>
+          REMATCH
         </Button>
         <Spacer type="back-button-space" />
         <Button type="block" action={act('back')}>
